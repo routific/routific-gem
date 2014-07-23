@@ -1,8 +1,6 @@
 Routific Ruby Gem
 =================
 
-----------
-
 This Ruby Gem assists users to easily access the [Routific API][1], which is a practical and scalable solution to the Vehicle Routing Problem.
 
 Logistics companies struggle with this challenge every day; most of them are still manually scheduling their fleet with a team of dispatchers.
@@ -15,13 +13,11 @@ In the U.S., 1/8th of all fuel is consumed by trucks - that's 50 billion gallons
 
 Installing
 ----------
-----------
 
 > gem install routific
 
 Usage
 -----
-----------
 Remember to require it before using it
 
 > require 'routific'
@@ -81,7 +77,6 @@ Both getRoute functions return the Route object, which has the following methods
 
 Examples
 --------
-----------
 Example 1:
 
     require 'routific'
