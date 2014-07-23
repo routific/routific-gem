@@ -85,6 +85,7 @@ Example 1:
     require 'routific'
     
     routific = Routific.new(--API_KEY--)
+
     routific.setLocation("order_1", {
       "name" => "6800 Cambie",
       "lat" => 49.227107,
@@ -109,12 +110,15 @@ Example 1:
       "shift_start" => "8:00",
       "shift_end" => "12:00",
     })
+
+    route = routific.getRoute()
     
 Example 2:
 
     require 'routific'
     
     Routific.setToken(--API_KEY--)
+
     network = {
         "order_1" => {
           "name" => "6800 Cambie",
@@ -127,6 +131,7 @@ Example 2:
           "lng" => -123.0873365
         }
     }
+
     visits = {
         "order_1" => {
           "start" => "9:00",
@@ -134,6 +139,7 @@ Example 2:
           "duration" => 10
         }
     }
+
     fleet = {
         "vehicle_1" => {
           "start-location" => "depot",
@@ -142,9 +148,11 @@ Example 2:
           "shift-end" => "12:00"
         }
     }
-    @data = {
+
+    data = {
         network: network,
         visits: visits,
         fleet: fleet
     }
-    Routific.getRoute(@data)
+
+    route = Routific.getRoute(data)
