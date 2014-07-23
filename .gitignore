@@ -1,0 +1,8 @@
+# Ignore Apple directory file
+.DS_Store
+
+# Ignore the .env environment variable file
+.env
+
+# Ignore the gem builds
+routific-*.gem
