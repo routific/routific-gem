@@ -5,75 +5,80 @@ Routific Ruby Gem
 
 This Ruby Gem assists users to easily access the [Routific API][1], which is a practical and scalable solution to the Vehicle Routing Problem.
 
-Logistics companies struggle with this challenge every day; most of them are still manually scheduling their fleet with a team of dispatchers.
-
-Routific can automate this process, and optimize it. The savings are tremendous: less fuel, and fewer vehicles, drivers and dispatchers.
-
-In the U.S., 1/8th of all fuel is consumed by trucks - that's 50 billion gallons a year. Our optimization algorithms will reduce that number by 20%!
-
-  [1]: https://routific.com
+  [1]: https://routific.com/developers
 
 Installing
 ----------
 
-> gem install routific
+`gem install routific`
 
 Usage
 -----
-Remember to require it before using it
+Remember to require it and instantiate it with your token before using it
 
-> require 'routific'
+```ruby
+require 'routific'
+routific = Routific.new(--API_KEY--)
+```
 
-The following instance methods are available:
+### Instance methods
 
- - Sets a location with the specified ID and parameters
+`routific.setLocation( id, params )`
 
-    Required arguments in params:
+Sets a location with the specified ID and parameters
 
-     - lat: Latitude of this location
-     - lng: Longitude of this location
+Required arguments in params:
 
-    Optional arguments in params:
-     - name: Name of this location
+ - lat: Latitude of this location
+ - lng: Longitude of this location
 
-   > routific.setLocation( id, params )
+Optional arguments in params:
 
- - Sets a visit for the specified location using the specified parameters
+ - name: Name of this location
 
-    Optional arguments in params:
-     - start: the earliest time for this visit. Default value is 00:00, if not specified.
-     - end: the latest time for this visit. Default value is    23:59, if not specified.
-     - duration: the length of this visit in minutes
-     - demand: the capacity that this visit requires
+`routific.setVisit( id, [params] )`
 
-   > routific.setVisit( id, [params] )
+Sets a visit for the specified location using the specified parameters
 
- - Sets a vehicle with the specified ID and parameters
+Optional arguments in params:
 
-    Required arguments in params:
-     - start_location: ID of start location for this vehicle
+ - start: the earliest time for this visit. Default value is 00:00, if not specified.
+ - end: the latest time for this visit. Default value is    23:59, if not specified.
+ - duration: the length of this visit in minutes
+ - demand: the capacity that this visit requires
 
-    Optional arguments in params:
-     - end_location: ID of end location for this vehicle
-     - shift_start: this vehicle's start shift time (e.g. '08:00'). Default value is 00:00, if not specified.
-     - shift_end: this vehicle's end shift time (e.g. '17:00'). Default value is 23:59, if not specified.
-     - capacity: the capacity that this vehicle can load
+`routific.setVehicle( id, params )`
 
-   > routific.setVehicle( id, params )
+Sets a vehicle with the specified ID and parameters
 
- - Returns the route using the previously provided network, visits and
-   fleet information
-   > routific.getRoute()
+Required arguments in params:
 
-The following class methods are available:
+ - start_location: ID of start location for this vehicle
 
- - Sets the default access token to use
-   > Routific.setToken( token )
+Optional arguments in params:
 
- - Returns the route using the specified access token, network, visits and fleet information
-   > Routific.getRoute( id, [params] )
+ - end_location: ID of end location for this vehicle
+ - shift_start: this vehicle's start shift time (e.g. '08:00'). Default value is 00:00, if not specified.
+ - shift_end: this vehicle's end shift time (e.g. '17:00'). Default value is 23:59, if not specified.
+ - capacity: the capacity that this vehicle can load
 
-Both getRoute functions return the Route object, which has the following methods:
+`routific.getRoute()`
+
+Returns the route using the previously provided network, visits and fleet information
+
+
+### Class methods
+
+`Routific.setToken( token )`
+
+Sets the default access token to use
+
+`Routific.getRoute( id, [params] )`
+
+Returns the route using the specified access token, network, visits and fleet information
+
+
+Both getRoute functions return the Route object, which has the following attributes:
 
  - status: A sanity check, will always be success when the HTTP code is 200
  - fitness: Total travel-time, representing the fitness score of the solution (less is better)
@@ -84,77 +89,81 @@ Examples
 --------
 Example 1:
 
-    require 'routific'
+```ruby
+require 'routific'
 
-    routific = Routific.new(--API_KEY--)
+routific = Routific.new(--API_KEY--)
 
-    routific.setLocation("order_1", {
-      "name" => "6800 Cambie",
-      "lat" => 49.227107,
-      "lng" => -123.1163085,
-    })
+routific.setLocation("order_1", {
+  "name" => "6800 Cambie",
+  "lat" => 49.227107,
+  "lng" => -123.1163085,
+})
 
-    routific.setLocation("depot", {
-      "name" => "800 Kingsway",
-      "lat" => 49.2553636,
-      "lng" => -123.0873365,
-    })
+routific.setLocation("depot", {
+  "name" => "800 Kingsway",
+  "lat" => 49.2553636,
+  "lng" => -123.0873365,
+})
 
-    routific.setVisit("order_1", {
-      "start" => "9:00",
-      "end" => "12:00",
-      "duration" => 10,
-    })
+routific.setVisit("order_1", {
+  "start" => "9:00",
+  "end" => "12:00",
+  "duration" => 10,
+})
 
-    routific.setVehicle("vehicle_1", {
-      "start_location" => "depot",
-      "end_location" => "depot",
-      "shift_start" => "8:00",
-      "shift_end" => "12:00",
-    })
+routific.setVehicle("vehicle_1", {
+  "start_location" => "depot",
+  "end_location" => "depot",
+  "shift_start" => "8:00",
+  "shift_end" => "12:00",
+})
 
-    route = routific.getRoute()
+route = routific.getRoute()
+```
 
 Example 2:
 
-    require 'routific'
+```ruby
+require 'routific'
 
-    Routific.setToken(--API_KEY--)
+Routific.setToken(--API_KEY--)
 
-    network = {
-        "order_1" => {
-          "name" => "6800 Cambie",
-          "lat" => 49.227107,
-          "lng" => -123.1163085
-        },
-        "depot" => {
-          "name" => "800 Kingsway",
-          "lat" => 49.2553636,
-          "lng" => -123.0873365
-        }
-    }
+network = {
+  "order_1" => {
+    "name" => "6800 Cambie",
+    "lat" => 49.227107,
+    "lng" => -123.1163085
+  },
+  "depot" => {
+    "name" => "800 Kingsway",
+    "lat" => 49.2553636,
+    "lng" => -123.0873365
+  }
+}
 
-    visits = {
-        "order_1" => {
-          "start" => "9:00",
-          "end" => "12:00",
-          "duration" => 10
-        }
-    }
+visits = {
+  "order_1" => {
+    "start" => "9:00",
+    "end" => "12:00",
+    "duration" => 10
+  }
+}
 
-    fleet = {
-        "vehicle_1" => {
-          "start-location" => "depot",
-          "end-location" => "depot",
-          "shift-start" => "8:00",
-          "shift-end" => "12:00"
-        }
-    }
+fleet = {
+  "vehicle_1" => {
+    "start-location" => "depot",
+    "end-location" => "depot",
+    "shift-start" => "8:00",
+    "shift-end" => "12:00"
+  }
+}
 
-    data = {
-        network: network,
-        visits: visits,
-        fleet: fleet
-    }
+data = {
+  network: network,
+  visits: visits,
+  fleet: fleet
+}
 
-    route = Routific.getRoute(data)
+route = Routific.getRoute(data)
+```
