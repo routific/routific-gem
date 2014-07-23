@@ -36,6 +36,7 @@ The following instance methods are available:
    > routific.setLocation( id, params )
 
  - Sets a visit for the specified location using the specified parameters
+ 
     Optional arguments in params:
      - start: the earliest time for this visit. Default value is 00:00, if not specified. 
      - end: the latest time for this visit. Default value is    23:59, if not specified.
