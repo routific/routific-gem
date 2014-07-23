@@ -1,6 +1,8 @@
 Routific Ruby Gem
 =================
 
+[![Build Status](https://secure.travis-ci.org/asoesilo/routific-gem.png)](http://travis-ci.org/asoesilo/routific-gem)
+
 This Ruby Gem assists users to easily access the [Routific API][1], which is a practical and scalable solution to the Vehicle Routing Problem.
 
 Logistics companies struggle with this challenge every day; most of them are still manually scheduling their fleet with a team of dispatchers.
@@ -27,7 +29,7 @@ The following instance methods are available:
  - Sets a location with the specified ID and parameters
 
     Required arguments in params:
-  
+
      - lat: Latitude of this location
      - lng: Longitude of this location
 
@@ -39,7 +41,7 @@ The following instance methods are available:
  - Sets a visit for the specified location using the specified parameters
 
     Optional arguments in params:
-     - start: the earliest time for this visit. Default value is 00:00, if not specified. 
+     - start: the earliest time for this visit. Default value is 00:00, if not specified.
      - end: the latest time for this visit. Default value is    23:59, if not specified.
      - duration: the length of this visit in minutes
      - demand: the capacity that this visit requires
@@ -47,7 +49,7 @@ The following instance methods are available:
    > routific.setVisit( id, [params] )
 
  - Sets a vehicle with the specified ID and parameters
- 
+
     Required arguments in params:
      - start_location: ID of start location for this vehicle
 
@@ -75,7 +77,7 @@ Both getRoute functions return the Route object, which has the following methods
 
  - status: A sanity check, will always be success when the HTTP code is 200
  - fitness: Total travel-time, representing the fitness score of the solution (less is better)
- - unserved: List of visits that could not be scheduled. 
+ - unserved: List of visits that could not be scheduled.
  - vehicleRoutes: The optimized schedule
 
 Examples
@@ -83,7 +85,7 @@ Examples
 Example 1:
 
     require 'routific'
-    
+
     routific = Routific.new(--API_KEY--)
 
     routific.setLocation("order_1", {
@@ -91,19 +93,19 @@ Example 1:
       "lat" => 49.227107,
       "lng" => -123.1163085,
     })
-    
+
     routific.setLocation("depot", {
       "name" => "800 Kingsway",
       "lat" => 49.2553636,
       "lng" => -123.0873365,
     })
-    
+
     routific.setVisit("order_1", {
       "start" => "9:00",
       "end" => "12:00",
       "duration" => 10,
     })
-    
+
     routific.setVehicle("vehicle_1", {
       "start_location" => "depot",
       "end_location" => "depot",
@@ -112,11 +114,11 @@ Example 1:
     })
 
     route = routific.getRoute()
-    
+
 Example 2:
 
     require 'routific'
-    
+
     Routific.setToken(--API_KEY--)
 
     network = {
