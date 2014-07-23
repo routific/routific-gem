@@ -19,7 +19,7 @@ require 'routific'
 routific = Routific.new(--API_KEY--)
 ```
 
-The following instance methods are available:
+### Instance methods
 
 `routific.setLocation( id, params )`
 
@@ -65,7 +65,7 @@ Optional arguments in params:
 Returns the route using the previously provided network, visits and fleet information
 
 
-The following class methods are available:
+### Class methods
 
 `Routific.setToken( token )`
  
