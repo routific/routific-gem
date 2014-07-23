@@ -9,7 +9,7 @@ Routific can automate this process, and optimize it. The savings are tremendous:
 
 In the U.S., 1/8th of all fuel is consumed by trucks - that's 50 billion gallons a year. Our optimization algorithms will reduce that number by 20%!
 
-  [1]: https://routific.com
+  [1]: https://routific.com/developers
 
 Installing
 ----------
