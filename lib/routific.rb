@@ -70,6 +70,7 @@ class Routific
         raise ArgumentError, "access token must be set"
       end
 
+      # Prefix the token with "bearer " if missing during assignment
       prefixed_token = (/bearer /.match(token).nil?) ? "bearer #{token}" : token
 
       # Sends HTTP request to Routific API server
