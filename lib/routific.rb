@@ -55,11 +55,11 @@ class Routific
   class << self
     # Sets the default access token to use
     def setToken(token)
-      @@token = token
+      @@token = (/bearer /.match(token).nil?) ? "bearer #{@@token}" : token
     end
 
     def token
-      @@token
+      return @@token
     end
 
     # Returns the route using the specified access token, network, visits and fleet information
@@ -73,7 +73,7 @@ class Routific
       # Sends HTTP request to Routific API server
       response = RestClient.post('https://routific.com/api/vrp', 
         data.to_json,
-        'Authorization' => "bearer #{token}",
+        'Authorization' => token,
         content_type: :json,
         accept: :json
         )
