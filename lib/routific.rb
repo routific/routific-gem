@@ -55,7 +55,7 @@ class Routific
   class << self
     # Sets the default access token to use
     def setToken(token)
-      @@token = (/bearer /.match(token).nil?) ? "bearer #{@@token}" : token
+      @@token = (/bearer /.match(token).nil?) ? "bearer #{token}" : token
     end
 
     def token
