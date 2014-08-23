@@ -55,7 +55,7 @@ class Routific
   class << self
     # Sets the default access token to use
     def setToken(token)
-      @@token = (/bearer /.match(token).nil?) ? "bearer #{token}" : token
+      @@token = token
     end
 
     def token
@@ -70,10 +70,12 @@ class Routific
         raise ArgumentError, "access token must be set"
       end
 
+      prefixed_token = (/bearer /.match(token).nil?) ? "bearer #{token}" : token
+
       # Sends HTTP request to Routific API server
       response = RestClient.post('https://routific.com/api/vrp', 
         data.to_json,
-        'Authorization' => token,
+        'Authorization' => prefixed_token,
         content_type: :json,
         accept: :json
         )
