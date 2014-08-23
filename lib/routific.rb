@@ -59,7 +59,7 @@ class Routific
     end
 
     def token
-      return @@token
+      @@token
     end
 
     # Returns the route using the specified access token, network, visits and fleet information
