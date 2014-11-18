@@ -16,8 +16,8 @@ describe Location do
       expect(location.lng).to eq(Factory::LOCATION_LONGITUDE)
     end
 
-    describe "#to_json" do
-      subject(:locationJSON) { JSON.parse(location.to_json(nil)) }
+    describe "#as_json" do
+      subject(:locationJSON) { location.as_json }
 
       it "can be reconverted to JSON" do
         expect { locationJSON }.to_not raise_error
@@ -69,8 +69,8 @@ describe Location do
       expect { location }.to_not raise_error
     end
 
-    describe "#to_json" do
-      subject(:locationJSON) { JSON.parse(location.to_json) }
+    describe "#as_json" do
+      subject(:locationJSON) { location.as_json }
 
       it "does not have name" do
         expect(locationJSON["name"]).to be_nil

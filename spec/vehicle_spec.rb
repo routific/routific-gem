@@ -24,8 +24,8 @@ describe Vehicle do
       expect(vehicle.capacity).to eq(Factory::VEHICLE_CAPACITY)
     end
 
-    describe "#to_json" do
-      subject(:vehicleJSON) { JSON.parse(vehicle.to_json) }
+    describe "#as_json" do
+      subject(:vehicleJSON) { vehicle.as_json }
 
       it "has start_location" do
         expect(vehicleJSON["start-location"]).to eq(Factory::VEHICLE_START_LOCATION)
@@ -71,8 +71,8 @@ describe Vehicle do
       expect { vehicle }.to_not raise_error
     end
 
-    describe "#to_json" do
-      subject(:vehicleJSON) { JSON.parse(vehicle.to_json) }
+    describe "#as_json" do
+      subject(:vehicleJSON) { vehicle.as_json }
 
       it "has start_location" do
         expect( vehicleJSON["start-location"] ).to eq(Factory::VEHICLE_START_LOCATION)

@@ -23,8 +23,13 @@ class Vehicle
     @capacity = params["capacity"]
   end
 
+  def to_json(options=nil)
+    as_json(options).to_json
+  end
+
   # Returns the JSON representation of this object
-  def to_json(options = nil)
+  # def to_json(options = nil)
+  def as_json(options = nil)
     jsonData = {}
     jsonData["start-location"] = self.start_location
     jsonData["end-location"] = self.end_location if self.end_location
@@ -32,7 +37,7 @@ class Vehicle
     jsonData["shift-end"] = self.shift_end if self.shift_end
     jsonData["capacity"] = self.capacity if self.capacity
 
-    jsonData.to_json
+    jsonData
   end
 
   private

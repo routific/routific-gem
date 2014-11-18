@@ -16,14 +16,19 @@ class Visit
     @demand = params["demand"]
   end
 
+  def to_json(options)
+    as_json(options).to_json
+  end
+
   # Returns the JSON representation of this object
-  def to_json(options = nil)
+  # def to_json(options = nil)
+  def as_json(options = nil)
     jsonData = {}
     jsonData["start"] = self.start if self.start
     jsonData["end"] = self.end if self.end
     jsonData["duration"] = self.duration if self.duration
     jsonData["demand"] = self.demand if self.demand
 
-    jsonData.to_json
+    jsonData
   end
 end

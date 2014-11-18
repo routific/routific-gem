@@ -20,8 +20,8 @@ describe Location do
       expect(visit.demand).to eq(Factory::VISIT_DEMAND)
     end
 
-    describe "#to_json" do
-      subject(:visitJSON) { JSON.parse(visit.to_json(nil)) }
+    describe "#as_json" do
+      subject(:visitJSON) { visit.as_json() }
 
       it "can be reconverted to JSON" do
         expect { visitJSON }.to_not raise_error
@@ -52,8 +52,8 @@ describe Location do
       expect { visit }.to_not raise_error
     end
 
-    describe "#to_json" do
-      subject(:visitJSON) { JSON.parse(visit.to_json) }
+    describe "#as_json" do
+      subject(:visitJSON) { visit.as_json }
 
       it "does not have start" do
         expect(visitJSON["start"]).to be_nil

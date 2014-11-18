@@ -19,14 +19,19 @@ class Location
     @name = params["name"]
   end
 
-  # Returns the JSON representation of this object
   def to_json(options = nil)
+    as_json(options).to_json
+  end
+
+  # Returns the JSON representation of this object
+  # def to_json(options = nil)
+  def as_json(options = nil)
     jsonData = {}
     jsonData["name"] = self.name if self.name
     jsonData["lat"] = self.lat
     jsonData["lng"] = self.lng
 
-    jsonData.to_json
+    jsonData
   end
 
   private

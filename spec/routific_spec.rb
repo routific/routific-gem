@@ -97,7 +97,8 @@ describe Routific do
       end
 
       it "returns a Route instance" do
-        expect(routific.getRoute).to be_instance_of(Route)
+        route = routific.getRoute() 
+        expect(route).to be_instance_of(Route)
       end
     end
   end
