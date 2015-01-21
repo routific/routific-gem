@@ -1,8 +1,6 @@
 require 'bundler/setup'
 Bundler.setup
 
-require 'pry'
-require 'pry-debugger'
 require 'faker'
 
 require 'dotenv'
