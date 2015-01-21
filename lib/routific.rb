@@ -71,18 +71,24 @@ class Routific
       end
 
       # Sends HTTP request to Routific API server
-      response = RestClient.post('https://routific.com/api/vrp', 
-        data.to_json,
-        'Authorization' => "bearer #{token}",
-        content_type: :json,
-        accept: :json
-        )
+      begin
+        response = RestClient.post('https://routific.com/api/vrp',
+          data.to_json,
+          'Authorization' => "bearer #{token}",
+          content_type: :json,
+          accept: :json
+          )
 
-      # Parse the HTTP request response to JSON
-      jsonResponse = JSON.parse(response)
+        # Parse the HTTP request response to JSON
+        jsonResponse = JSON.parse(response)
 
-      # Parse the JSON representation into a Route object
-      Route.parse(jsonResponse)
+        # Parse the JSON representation into a Route object
+        Route.parse(jsonResponse)
+      rescue => e
+        errorResponse = JSON.parse e.response.body
+        puts "Received HTTP #{e.message}: #{errorResponse["error"]}"
+        nil
+      end
     end
   end
 end
