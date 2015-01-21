@@ -1,12 +1,14 @@
 Gem::Specification.new do |s|
   s.name              = 'routific'
-  s.version           = '0.0.2'
-  s.date              = '2014-11-18'
+  s.version           = '0.0.3'
+  s.date              = '2015-01-21'
   s.add_runtime_dependency('rest-client', '~> 1.7')
   s.add_runtime_dependency('json', '~> 1.8')
   s.add_development_dependency('rspec', '~> 3.0')
   s.add_development_dependency('faker', '~> 1.4')
   s.add_development_dependency('dotenv', '~> 0.11')
+  s.add_development_dependency('byebug', '~> 3.5')
+  s.add_development_dependency('pry-byebug', '~> 2.0')
   s.summary           = 'routific API'
   s.description       = 'Gem to use Routific API'
   s.authors           = ['Marc Kuo', 'Andre Soesilo']
