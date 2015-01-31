@@ -70,11 +70,14 @@ class Routific
         raise ArgumentError, "access token must be set"
       end
 
-      # Sends HTTP request to Routific API server
+      # Prefix the token with "bearer " if missing during assignment
+      prefixed_token = (/bearer /.match(token).nil?) ? "bearer #{token}" : token
+
       begin
+        # Sends HTTP request to Routific API server
         response = RestClient.post('https://routific.com/api/vrp',
           data.to_json,
-          'Authorization' => "bearer #{token}",
+          'Authorization' => prefixed_token,
           content_type: :json,
           accept: :json
           )
