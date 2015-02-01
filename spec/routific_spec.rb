@@ -97,7 +97,7 @@ describe Routific do
       end
 
       it "returns a Route instance" do
-        route = routific.getRoute() 
+        route = routific.getRoute()
         expect(route).to be_instance_of(Route)
       end
     end
@@ -174,6 +174,12 @@ describe Routific do
 
           it "returns a Route instance" do
             expect(Routific.getRoute(@data, ENV["API_KEY"])).to be_instance_of(Route)
+          end
+
+          it "still successful even if missing prefix 'bearer ' in key" do
+            key = ENV["API_KEY"].sub /bearer /, ''
+            expect(/bearer /.match(key).nil?).to be true
+            expect(Routific.getRoute(@data, key)).to be_instance_of(Route)
           end
         end
       end
