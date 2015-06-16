@@ -19,6 +19,12 @@ class Location
     @name = params["name"]
   end
 
+  def ==(another_location)
+    self.name == another_location.name &&
+      self.lat == another_location.lat &&
+      self.lng == another_location.lng
+  end
+
   def to_json(options = nil)
     as_json(options).to_json
   end

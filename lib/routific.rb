@@ -9,42 +9,33 @@ require_relative './routific/way_point'
 
 # Main class of this gem
 class Routific
-  attr_reader :token, :network, :visits, :fleet
+  attr_reader :token, :visits, :fleet
 
   # Constructor
   # token: Access token for Routific API
   def initialize(token)
     @token = token
-    @network = {}
     @visits = {}
     @fleet = {}
-  end
-
-  # Sets a location with the specified ID and parameters
-  # id: location ID
-  # params: parameters for this location
-  def setLocation(id, params)
-    network[id] = Location.new(params)
   end
 
   # Sets a visit for the specified location using the specified parameters
   # id: ID of location to visit
   # params: parameters for this visit
   def setVisit(id, params={})
-    visits[id] = Visit.new(params)
+    visits[id] = Visit.new(id, params)
   end
 
   # Sets a vehicle with the specified ID and parameters
   # id: vehicle ID
   # params: parameters for this vehicle
   def setVehicle(id, params)
-    fleet[id] = Vehicle.new(params)
+    fleet[id] = Vehicle.new(id, params)
   end
 
-  # Returns the route using the previously provided network, visits and fleet information
+  # Returns the route using the previously provided visits and fleet information
   def getRoute
     data = {
-      network: network,
       visits: visits,
       fleet: fleet
     }
@@ -62,7 +53,7 @@ class Routific
       @@token
     end
 
-    # Returns the route using the specified access token, network, visits and fleet information
+    # Returns the route using the specified access token, visits and fleet information
     # If no access token is provided, the default access token previously set is used
     # If the default access token either is nil or has not been set, an ArgumentError is raised
     def getRoute(data, token = @@token)
@@ -75,7 +66,7 @@ class Routific
 
       begin
         # Sends HTTP request to Routific API server
-        response = RestClient.post('https://routific.com/api/vrp',
+        response = RestClient.post('https://api.routific.com/v1/vrp',
           data.to_json,
           'Authorization' => prefixed_token,
           content_type: :json,
@@ -88,6 +79,7 @@ class Routific
         # Parse the JSON representation into a Route object
         Route.parse(jsonResponse)
       rescue => e
+        puts e
         errorResponse = JSON.parse e.response.body
         puts "Received HTTP #{e.message}: #{errorResponse["error"]}"
         nil
