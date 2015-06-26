@@ -8,10 +8,6 @@ describe Vehicle do
       expect(way_point.location_id).to eq(Factory::WAY_POINT_LOCATION_ID)
     end
 
-    it "has location_name" do
-      expect(way_point.location_name).to eq(Factory::WAY_POINT_LOCATION_NAME)
-    end
-
     it "has arrival_time" do
       expect(way_point.arrival_time).to eq(Factory::WAY_POINT_ARRIVAL_TIME)
     end
