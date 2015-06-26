@@ -47,9 +47,6 @@ Sets a vehicle with the specified ID and parameters
 
 Required arguments in params:
 
-
-Required arguments in params:
-
 - start_location: Object representing the start location for this vehicle.
   + lat: Latitude of this location
   + lng: Longitude of this location
