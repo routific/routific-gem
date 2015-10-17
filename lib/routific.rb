@@ -23,14 +23,14 @@ class Routific
   # id: ID of location to visit
   # params: parameters for this visit
   def setVisit(id, params={})
-    visits[id] = Visit.new(id, params)
+    visits[id] = RoutificApi::Visit.new(id, params)
   end
 
   # Sets a vehicle with the specified ID and parameters
   # id: vehicle ID
   # params: parameters for this vehicle
   def setVehicle(id, params)
-    fleet[id] = Vehicle.new(id, params)
+    fleet[id] = RoutificApi::Vehicle.new(id, params)
   end
 
   # Returns the route using the previously provided visits and fleet information
@@ -76,8 +76,8 @@ class Routific
         # Parse the HTTP request response to JSON
         jsonResponse = JSON.parse(response)
 
-        # Parse the JSON representation into a Route object
-        Route.parse(jsonResponse)
+        # Parse the JSON representation into a RoutificApi::Route object
+        RoutificApi::Route.parse(jsonResponse)
       rescue => e
         puts e
         errorResponse = JSON.parse e.response.body

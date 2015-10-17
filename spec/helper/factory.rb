@@ -12,7 +12,7 @@ class Factory
     "lat"   => LOCATION_LATITUDE,
     "lng"   => LOCATION_LONGITUDE
     }
-  LOCATION = Location.new(LOCATION_PARAMS)
+  LOCATION = RoutificApi::Location.new(LOCATION_PARAMS)
 
   # Factory and constants for visit
   VISIT_ID = Faker::Lorem.word
@@ -31,7 +31,7 @@ class Factory
     "demand"    => VISIT_DEMAND,
     "location"  => VISIT_LOCATION
   }
-  VISIT = Visit.new(VISIT_ID, VISIT_PARAMS)
+  VISIT = RoutificApi::Visit.new(VISIT_ID, VISIT_PARAMS)
 
   # Factory and constants for vehicle
   VEHICLE_ID = Faker::Lorem.word
@@ -54,18 +54,18 @@ class Factory
     "shift_end"       => VEHICLE_SHIFT_END,
     "capacity"        => VEHICLE_CAPACITY
     }
-  VEHICLE = Vehicle.new(VEHICLE_ID, VEHICLE_PARAMS)
+  VEHICLE = RoutificApi::Vehicle.new(VEHICLE_ID, VEHICLE_PARAMS)
 
   # Factory and constants for way point
   WAY_POINT_LOCATION_ID = Faker::Lorem.word
   WAY_POINT_ARRIVAL_TIME = "09:00"
   WAY_POINT_FINISH_TIME = "09:10"
-  WAY_POINT = WayPoint.new( WAY_POINT_LOCATION_ID,
+  WAY_POINT = RoutificApi::WayPoint.new( WAY_POINT_LOCATION_ID,
     WAY_POINT_ARRIVAL_TIME, WAY_POINT_FINISH_TIME )
 
   # Factory and constants for route
   ROUTE_STATUS = Faker::Lorem.word
   ROUTE_FITNESS = Faker::Lorem.word
   ROUTE_UNSERVED = [Faker::Lorem.word]
-  ROUTE = Route.new( ROUTE_STATUS, ROUTE_FITNESS, ROUTE_UNSERVED )
+  ROUTE = RoutificApi::Route.new( ROUTE_STATUS, ROUTE_FITNESS, ROUTE_UNSERVED )
 end
