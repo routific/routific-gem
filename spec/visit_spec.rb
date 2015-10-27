@@ -1,6 +1,6 @@
 require_relative './helper/spec_helper'
 
-describe Location do
+describe RoutificApi::Location do
   describe "valid parameters" do
     subject(:visit) { Factory::VISIT }
 
@@ -50,7 +50,7 @@ describe Location do
   end
 
   describe "missing location" do
-    subject(:visit) { Visit.new(Faker::Lorem.word, {}) }
+    subject(:visit) { RoutificApi::Visit.new(Faker::Lorem.word, {}) }
 
     it "raises an error" do
       expect { visit }.to raise_error(ArgumentError)
@@ -58,7 +58,7 @@ describe Location do
   end
 
   describe "missing optional parameters" do
-    subject(:visit) { Visit.new(Faker::Lorem.word, {
+    subject(:visit) { RoutificApi::Visit.new(Faker::Lorem.word, {
       "location" => {
         "lat" => Faker::Address.latitude.to_f,
         "lng" => Faker::Address.longitude.to_f,

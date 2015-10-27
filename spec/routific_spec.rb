@@ -31,7 +31,7 @@ describe Routific do
       end
 
       it "location 1 in visits is instances of Visit" do
-        expect(routific.visits[id]).to be_instance_of(Visit)
+        expect(routific.visits[id]).to be_instance_of(RoutificApi::Visit)
       end
     end
 
@@ -47,7 +47,7 @@ describe Routific do
       end
 
       it "vehicle in fleet is instances of Vehicle" do
-        expect(routific.fleet[id]).to be_instance_of(Vehicle)
+        expect(routific.fleet[id]).to be_instance_of(RoutificApi::Vehicle)
       end
     end
 
@@ -82,7 +82,7 @@ describe Routific do
 
       it "returns a Route instance" do
         route = routific.getRoute()
-        expect(route).to be_instance_of(Route)
+        expect(route).to be_instance_of(RoutificApi::Route)
       end
     end
   end
@@ -147,7 +147,7 @@ describe Routific do
           end
 
           it "returns a Route instance" do
-            expect(Routific.getRoute(@data)).to be_instance_of(Route)
+            expect(Routific.getRoute(@data)).to be_instance_of(RoutificApi::Route)
           end
         end
 
@@ -157,13 +157,13 @@ describe Routific do
           end
 
           it "returns a Route instance" do
-            expect(Routific.getRoute(@data, ENV["API_KEY"])).to be_instance_of(Route)
+            expect(Routific.getRoute(@data, ENV["API_KEY"])).to be_instance_of(RoutificApi::Route)
           end
 
           it "still successful even if missing prefix 'bearer ' in key" do
             key = ENV["API_KEY"].sub /bearer /, ''
             expect(/bearer /.match(key).nil?).to be true
-            expect(Routific.getRoute(@data, key)).to be_instance_of(Route)
+            expect(Routific.getRoute(@data, key)).to be_instance_of(RoutificApi::Route)
           end
         end
       end

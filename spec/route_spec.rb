@@ -1,6 +1,6 @@
 require_relative './helper/spec_helper'
 
-describe Route do
+describe RoutificApi::Route do
   subject(:route) { Factory::ROUTE }
 
   it "has status" do

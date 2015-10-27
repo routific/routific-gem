@@ -1,6 +1,6 @@
 require_relative './helper/spec_helper'
 
-describe Location do
+describe RoutificApi::Location do
   describe "valid parameters" do
     subject(:location) { Factory::LOCATION }
 
@@ -38,7 +38,7 @@ describe Location do
   end
 
   describe "missing 'lat' parameter" do
-    subject(:location) { Location.new({
+    subject(:location) { RoutificApi::Location.new({
       "name" => Factory::LOCATION_NAME,
       "lng" => Factory::LOCATION_LONGITUDE
       }) }
@@ -49,7 +49,7 @@ describe Location do
   end
 
   describe "missing 'lng' parameter" do
-    subject(:location) { Location.new({
+    subject(:location) { RoutificApi::Location.new({
       "name" => Factory::LOCATION_NAME,
       "lat" => Factory::LOCATION_LATITUDE
       }) }
@@ -60,7 +60,7 @@ describe Location do
   end
 
   describe "missing 'name' parameter" do
-    subject(:location) { Location.new({
+    subject(:location) { RoutificApi::Location.new({
       "lat" => Factory::LOCATION_LATITUDE,
       "lng" => Factory::LOCATION_LONGITUDE
       }) }

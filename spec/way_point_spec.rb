@@ -1,6 +1,6 @@
 require_relative './helper/spec_helper'
 
-describe Vehicle do
+describe RoutificApi::Vehicle do
   describe "valid parameters" do
     subject(:way_point) { Factory::WAY_POINT }
 

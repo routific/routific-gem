@@ -1,6 +1,6 @@
 require_relative './helper/spec_helper'
 
-describe Vehicle do
+describe RoutificApi::Vehicle do
   describe "valid parameters" do
     subject(:vehicle) { Factory::VEHICLE }
 
@@ -9,11 +9,11 @@ describe Vehicle do
     end
 
     it "has start_location" do
-      expect(vehicle.start_location).to eq(Location.new(Factory::VEHICLE_START_LOCATION))
+      expect(vehicle.start_location).to eq(RoutificApi::Location.new(Factory::VEHICLE_START_LOCATION))
     end
 
     it "has end_location" do
-      expect(vehicle.end_location).to eq(Location.new(Factory::VEHICLE_END_LOCATION))
+      expect(vehicle.end_location).to eq(RoutificApi::Location.new(Factory::VEHICLE_END_LOCATION))
     end
 
     it "has shift_start" do
@@ -54,7 +54,7 @@ describe Vehicle do
   end
 
   describe "missing 'start_location' parameter" do
-    subject(:vehicle) { Vehicle.new(Factory::VEHICLE_ID, {
+    subject(:vehicle) { RoutificApi::Vehicle.new(Factory::VEHICLE_ID, {
       "end_location"  => Factory::VEHICLE_END_LOCATION,
       "shift_start"   => Factory::VEHICLE_SHIFT_START,
       "shift_end"     => Factory::VEHICLE_SHIFT_END,
@@ -67,7 +67,7 @@ describe Vehicle do
   end
 
   describe "missing optional parameters" do
-    subject(:vehicle) { Vehicle.new(Factory::VEHICLE_ID, {
+    subject(:vehicle) { RoutificApi::Vehicle.new(Factory::VEHICLE_ID, {
       "start_location"  => Factory::VEHICLE_START_LOCATION
       }) }
 
