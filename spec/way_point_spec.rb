@@ -15,5 +15,9 @@ describe RoutificApi::Vehicle do
     it "has finish_time" do
       expect(way_point.finish_time).to eq(Factory::WAY_POINT_FINISH_TIME)
     end
+
+    it "has a location name" do
+      expect(way_point.location_name).to eq(Factory::WAY_POINT_LOCATION_NAME)
+    end
   end
 end

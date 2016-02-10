@@ -60,8 +60,13 @@ class Factory
   WAY_POINT_LOCATION_ID = Faker::Lorem.word
   WAY_POINT_ARRIVAL_TIME = "09:00"
   WAY_POINT_FINISH_TIME = "09:10"
-  WAY_POINT = RoutificApi::WayPoint.new( WAY_POINT_LOCATION_ID,
-    WAY_POINT_ARRIVAL_TIME, WAY_POINT_FINISH_TIME )
+  WAY_POINT_LOCATION_NAME = Faker::Lorem.word
+  WAY_POINT = RoutificApi::WayPoint.new({
+    'location_id'   => WAY_POINT_LOCATION_ID,
+    'arrival_time'  => WAY_POINT_ARRIVAL_TIME,
+    'finish_time'   => WAY_POINT_FINISH_TIME,
+    'location_name' => WAY_POINT_LOCATION_NAME
+  })
 
   # Factory and constants for route
   ROUTE_STATUS = Faker::Lorem.word

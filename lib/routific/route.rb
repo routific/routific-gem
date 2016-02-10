@@ -34,10 +34,7 @@ module RoutificApi
           # Get all way points for this vehicle
           way_points.each do |waypoint_info|
             # Get all information for this way point
-            location_id = waypoint_info["location_id"]
-            arrival_time = waypoint_info["arrival_time"]
-            finish_time = waypoint_info["finish_time"]
-            way_point = RoutificApi::WayPoint.new(location_id, arrival_time, finish_time)
+            way_point = RoutificApi::WayPoint.new(waypoint_info)
             route.addWayPoint(vehicle_name, way_point)
           end
         end
