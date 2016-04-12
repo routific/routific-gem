@@ -3,3 +3,6 @@
 
 # Ignore the gem builds
 routific-*.gem
+
+# Ignore local .bundle directory
+.bundle

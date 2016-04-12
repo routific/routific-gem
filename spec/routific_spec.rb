@@ -20,6 +20,13 @@ describe Routific do
       end
     end
 
+    describe "#options" do
+      it "is instance of a Routific::Options" do
+        routific.setOptions(Factory::ROUTE_OPTIONS_PARAMS)
+        expect(routific.options).to be_instance_of(RoutificApi::Options)
+      end
+    end
+
     describe "#setVisit" do
       let(:id) { Faker::Lorem.word }
       before do
@@ -48,6 +55,24 @@ describe Routific do
 
       it "vehicle in fleet is instances of Vehicle" do
         expect(routific.fleet[id]).to be_instance_of(RoutificApi::Vehicle)
+      end
+    end
+
+    describe "#setOptions" do
+      before do
+        routific.setOptions(Factory::ROUTE_OPTIONS_PARAMS)
+      end
+
+      it "adds an options hash into options" do
+        expect(routific.options.traffic).to eq(Factory::ROUTE_OPTIONS_TRAFFIC)
+        expect(routific.options.min_visits_per_vehicle).to eq(Factory::ROUTE_OPTIONS_MIN_VISITS_PER_VEHICLE)
+        expect(routific.options.balance).to eq(Factory::ROUTE_OPTIONS_BALANCE)
+        expect(routific.options.min_vehicles).to eq(Factory::ROUTE_OPTIONS_MIN_VEHICLES)
+        expect(routific.options.shortest_distance).to eq(Factory::ROUTE_OPTIONS_SHORTEST_DISTANCE)
+      end
+
+      it "options is instance of RoutificApi::Options" do
+        expect(routific.options).to be_instance_of(RoutificApi::Options)
       end
     end
 
@@ -81,6 +106,21 @@ describe Routific do
       end
 
       it "returns a Route instance" do
+        route = routific.getRoute()
+        expect(route).to be_instance_of(RoutificApi::Route)
+      end
+
+      it "attaches optional data hash" do
+        routific.setOptions({
+          "traffic" => "slow"
+        })
+
+        data = {
+          visits: routific.visits,
+          fleet: routific.fleet,
+          options: routific.options
+        }
+
         route = routific.getRoute()
         expect(route).to be_instance_of(RoutificApi::Route)
       end

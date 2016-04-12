@@ -6,10 +6,11 @@ require_relative './routific/visit'
 require_relative './routific/vehicle'
 require_relative './routific/route'
 require_relative './routific/way_point'
+require_relative './routific/options'
 
 # Main class of this gem
 class Routific
-  attr_reader :token, :visits, :fleet
+  attr_reader :token, :visits, :fleet, :options
 
   # Constructor
   # token: Access token for Routific API
@@ -17,6 +18,7 @@ class Routific
     @token = token
     @visits = {}
     @fleet = {}
+    @options = {}
   end
 
   # Sets a visit for the specified location using the specified parameters
@@ -33,6 +35,12 @@ class Routific
     fleet[id] = RoutificApi::Vehicle.new(id, params)
   end
 
+  # Sets options with the specified params
+  # params: parameters for these options
+  def setOptions(params)
+    @options = RoutificApi::Options.new(params)
+  end
+
   # Returns the route using the previously provided visits and fleet information
   def getRoute
     data = {
@@ -40,6 +48,7 @@ class Routific
       fleet: fleet
     }
 
+    data[:options] = options if options
     Routific.getRoute(data, token)
   end
 

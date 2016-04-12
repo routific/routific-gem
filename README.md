@@ -63,6 +63,18 @@ Optional arguments in params:
  - shift_end: this vehicle's end shift time (e.g. '17:00'). Default value is 23:59, if not specified.
  - capacity: the capacity that this vehicle can load
 
+`routific.setOptions( params )`
+
+Sets optional options onto the route requests.
+
+Optional arguments must be one of the following:
+
+- traffic
+- min_visits_per_vehicle
+- balance
+- min_vehicles
+- shortest_distance
+
 `routific.getRoute()`
 
 Returns the route using the previously provided network, visits and fleet information
