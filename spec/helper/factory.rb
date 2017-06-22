@@ -70,9 +70,15 @@ class Factory
 
   # Factory and constants for route
   ROUTE_STATUS = Faker::Lorem.word
-  ROUTE_FITNESS = Faker::Lorem.word
-  ROUTE_UNSERVED = [Faker::Lorem.word]
-  ROUTE = RoutificApi::Route.new( ROUTE_STATUS, ROUTE_FITNESS, ROUTE_UNSERVED )
+  ROUTE_UNSERVED = { Faker::Lorem.word => Faker::Lorem.word }
+  ROUTE_TOTAL_IDLE_TIME = 10
+  ROUTE_TOTAL_TRAVEL_TIME = 20
+  ROUTE = RoutificApi::Route.new(
+    status: ROUTE_STATUS,
+    unserved: ROUTE_UNSERVED,
+    total_idle_time: ROUTE_TOTAL_IDLE_TIME,
+    total_travel_time: ROUTE_TOTAL_TRAVEL_TIME
+  )
 
   # Factory and constants for options
   ROUTE_OPTIONS_TRAFFIC = "slow"

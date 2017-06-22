@@ -7,12 +7,20 @@ describe RoutificApi::Route do
     expect(route.status).to eq(Factory::ROUTE_STATUS)
   end
 
-  it "has fitness" do
-    expect(route.fitness).to eq(Factory::ROUTE_FITNESS)
+  it "has total_travel_time" do
+    expect(route.total_travel_time).to eq(Factory::ROUTE_TOTAL_TRAVEL_TIME)
+  end
+
+  it "has total_idle_time" do
+    expect(route.total_idle_time).to eq(Factory::ROUTE_TOTAL_IDLE_TIME)
   end
 
   it "has unserved" do
     expect(route.unserved).to eq(Factory::ROUTE_UNSERVED)
+  end
+
+  it "has number_of_unserved" do
+    expect(route.number_of_unserved).to eq(Factory::ROUTE_UNSERVED.count)
   end
 
   describe "#vehicleRoutes" do
@@ -21,9 +29,9 @@ describe RoutificApi::Route do
     end
   end
 
-  describe "#addWayPoint" do
+  describe "#add_way_point" do
     before do
-      route.addWayPoint(Factory::VEHICLE_NAME, Factory::WAY_POINT)
+      route.add_way_point(Factory::VEHICLE_NAME, Factory::WAY_POINT)
     end
 
     it "creates a new key in vehicleRoutes" do
