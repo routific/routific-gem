@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    routific (1.1.0)
+    routific (1.1.1)
       json (~> 1.8)
       rest-client (~> 1.7)
 
@@ -50,6 +50,3 @@ DEPENDENCIES
   faker (~> 1.4)
   routific!
   rspec (~> 3.0)
-
-BUNDLED WITH
-   1.11.2
