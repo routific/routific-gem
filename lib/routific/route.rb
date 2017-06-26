@@ -4,11 +4,14 @@ module RoutificApi
     attr_reader :status, :unserved, :vehicleRoutes, :total_travel_time, :total_idle_time
 
     # Constructor
-    def initialize(status:, solution: {}, unserved: {}, total_travel_time: 0, total_idle_time: 0)
+    def initialize(status:, solution: {}, unserved: {}, total_travel_time: 0,
+    total_idle_time: 0, total_break_time: 0, total_working_time: 0)
       @status = status
       @unserved = unserved
       @total_idle_time = total_idle_time
       @total_travel_time = total_travel_time
+      @total_break_time = total_break_time
+      @total_working_time = total_working_time
 
       add_solution(solution)
     end
