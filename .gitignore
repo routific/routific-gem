@@ -6,3 +6,6 @@ routific-*.gem
 
 # Ignore local .bundle directory
 .bundle
+
+# Ignore gem locked versions
+Gemfile.lock
