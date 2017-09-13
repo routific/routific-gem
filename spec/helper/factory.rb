@@ -76,6 +76,7 @@ class Factory
   ROUTE = RoutificApi::Route.new(
     status: ROUTE_STATUS,
     unserved: ROUTE_UNSERVED,
+    num_unserved: ROUTE_UNSERVED.keys.length,
     total_idle_time: ROUTE_TOTAL_IDLE_TIME,
     total_travel_time: ROUTE_TOTAL_TRAVEL_TIME
   )

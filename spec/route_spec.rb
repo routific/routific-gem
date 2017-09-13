@@ -19,8 +19,8 @@ describe RoutificApi::Route do
     expect(route.unserved).to eq(Factory::ROUTE_UNSERVED)
   end
 
-  it "has number_of_unserved" do
-    expect(route.number_of_unserved).to eq(Factory::ROUTE_UNSERVED.count)
+  it "has num_unserved" do
+    expect(route.num_unserved).to eq(Factory::ROUTE_UNSERVED.count)
   end
 
   describe "#vehicleRoutes" do
