@@ -28,6 +28,10 @@ describe RoutificApi::Vehicle do
       expect(vehicle.capacity).to eq(Factory::VEHICLE_CAPACITY)
     end
 
+    it "has strict_start" do
+      expect(vehicle.strict_start).to eq(Factory::VEHICLE_STRICT_START)
+    end
+
     describe "#as_json" do
       subject(:vehicleJSON) { vehicle.as_json }
 
