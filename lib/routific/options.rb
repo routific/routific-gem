@@ -1,7 +1,7 @@
 module RoutificApi
   # This class represents a set of options for the request
   class Options
-    VALID_PARAMS = %w{ traffic min_visits_per_vehicle balance min_vehicles shortest_distance }
+    VALID_PARAMS = %w{ traffic min_visits_per_vehicle balance min_vehicles shortest_distance squash_durations max_vehicle_overtime max_visit_lateness }
 
     attr_reader *VALID_PARAMS
 
@@ -14,6 +14,9 @@ module RoutificApi
       @balance = params["balance"]
       @min_vehicles = params["min_vehicles"]
       @shortest_distance = params["shortest_distance"]
+      @squash_durations = params["squash_durations"]
+      @max_visit_lateness = params["max_visit_lateness"]
+      @max_vehicle_overtime = params["max_vehicle_overtime"]
     end
 
     def to_json(options)
@@ -36,7 +39,6 @@ module RoutificApi
     private
     # Validates the parameters being provided
     # Raises an ArgumentError if any of the provided params is not supported
-    # Supported params are traffic, min_visits_per_vehicle, and balance
     def validate(params)
       invalid = params.keys.reject { |k| VALID_PARAMS.include?(k) }
 
