@@ -2,7 +2,7 @@ module RoutificApi
   # This class represents a vehicle in the fleet
   class Vehicle
     attr_accessor :id, :start_location, :end_location, :shift_start,
-      :shift_end, :capacity, :strict_start, :min_visits
+      :shift_end, :capacity, :strict_start, :min_visits, :speed
 
     # Constructor
     #
@@ -27,6 +27,7 @@ module RoutificApi
       @capacity = params["capacity"]
       @strict_start = params["strict_start"]
       @min_visits = params["min_visits"]
+      @speed = params["speed"]
     end
 
     def to_json(options=nil)
@@ -44,6 +45,7 @@ module RoutificApi
       jsonData["capacity"] = self.capacity if self.capacity
       jsonData["strict_start"] = self.strict_start if not self.strict_start.nil?
       jsonData["min_visits"] = self.min_visits if self.min_visits
+      jsonData["speed"] = self.speed if self.speed
 
       jsonData
     end
