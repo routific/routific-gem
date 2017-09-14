@@ -7,6 +7,7 @@ require_relative './routific/vehicle'
 require_relative './routific/route'
 require_relative './routific/way_point'
 require_relative './routific/options'
+require_relative './routific/job'
 
 # Main class of this gem
 class Routific
@@ -60,11 +61,12 @@ class Routific
     }
 
     data[:options] = options if options
-    Routific.get_route_async(data, token)
+    result = Routific.send_request("POST", "vrp-long", token, data)
+    RoutificApi::Job.new(result["job_id"], data, self)
   end
 
-  def update_job(job_id, token = @@token)
-    send_request("GET", "jobs/#{job_id}", token)
+  def update_job(job_id)
+    Routific.send_request("GET", "jobs/#{job_id}", token)
   end
 
   class << self
@@ -82,22 +84,7 @@ class Routific
     # If the default access token either is nil or has not been set, an ArgumentError is raised
     def getRoute(data, token = @@token)
       result = send_request("POST", "vrp", token, data)
-      RoutificApi::Route.parse(jsonResponse)
-    end
-
-    def get_route_async(data, token = @@token)
-      result = send_request("POST", "vrp-long", token, data)
-      RoutificApi::Job.new(result["job_id"], data, self)
-    end
-
-    private
-    def validate_and_prefix_token(token)
-      if token.nil?
-        raise ArgumentError, "access token must be set"
-      end
-
-      # Prefix the token with "bearer " if missing during assignment
-      (/bearer /.match(token).nil?) ? "bearer #{token}" : token
+      RoutificApi::Route.parse(result)
     end
 
     ##
@@ -127,8 +114,17 @@ class Routific
         puts e
         errorResponse = JSON.parse e.response.body
         puts "Received HTTP #{e.message}: #{errorResponse["error"]}"
-        nil
+        nil end
+    end
+
+    private
+    def validate_and_prefix_token(token)
+      if token.nil?
+        raise ArgumentError, "access token must be set"
       end
+
+      # Prefix the token with "bearer " if missing during assignment
+      (/bearer /.match(token).nil?) ? "bearer #{token}" : token
     end
   end
 end

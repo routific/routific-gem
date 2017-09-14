@@ -16,9 +16,10 @@ module RoutificApi
     def update
       job_data = @routific.update_job(@id)
       FIELDS.each do |field|
-        set_instance_variable "@#{field}", job_data[field.to_s]
+        instance_variable_set "@#{field}", job_data[field.to_s]
       end
-      @route = RoutificApi::Route.parse(job["output"]) if job["output"]
+      @route = RoutificApi::Route.parse(job_data["output"]) if job_data["output"]
+      job_data['status']
     end
   end
 end
