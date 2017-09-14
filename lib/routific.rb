@@ -11,6 +11,7 @@ require_relative './routific/options'
 # Main class of this gem
 class Routific
   attr_reader :token, :visits, :fleet, :options
+  BASE_URL = 'https://api.routific.com/v1/'
 
   # Constructor
   # token: Access token for Routific API
@@ -52,6 +53,20 @@ class Routific
     Routific.getRoute(data, token)
   end
 
+  def get_route_async
+    data = {
+      visits: visits,
+      fleet: fleet
+    }
+
+    data[:options] = options if options
+    Routific.get_route_async(data, token)
+  end
+
+  def update_job(job_id, token = @@token)
+    send_request("GET", "jobs/#{job_id}", token)
+  end
+
   class << self
     # Sets the default access token to use
     def setToken(token)
@@ -66,27 +81,48 @@ class Routific
     # If no access token is provided, the default access token previously set is used
     # If the default access token either is nil or has not been set, an ArgumentError is raised
     def getRoute(data, token = @@token)
+      result = send_request("POST", "vrp", token, data)
+      RoutificApi::Route.parse(jsonResponse)
+    end
+
+    def get_route_async(data, token = @@token)
+      result = send_request("POST", "vrp-long", token, data)
+      RoutificApi::Job.new(result["job_id"], data, self)
+    end
+
+    private
+    def validate_and_prefix_token(token)
       if token.nil?
         raise ArgumentError, "access token must be set"
       end
 
       # Prefix the token with "bearer " if missing during assignment
-      prefixed_token = (/bearer /.match(token).nil?) ? "bearer #{token}" : token
+      (/bearer /.match(token).nil?) ? "bearer #{token}" : token
+    end
 
+    ##
+    # method: "GET", "POST"
+    # endpoint: "vrp", "vrp-long", "job"
+    # token: if nil, raise ArgumentError; if missing "bearer", prefix
+    # data: only for POST requests
+    #
+    def send_request(method, endpoint, token, data = nil)
+      url = BASE_URL + endpoint
+      headers = {
+        'Authorization' => validate_and_prefix_token(token),
+        content_type: :json,
+        accept: :json
+      }
       begin
         # Sends HTTP request to Routific API server
-        response = RestClient.post('https://api.routific.com/v1/vrp',
-          data.to_json,
-          'Authorization' => prefixed_token,
-          content_type: :json,
-          accept: :json
-          )
+        response = nil
+        if method == 'GET'
+          response = RestClient.get(url, headers)
+        elsif method == 'POST'
+          response = RestClient.post(url, data.to_json, headers)
+        end
 
-        # Parse the HTTP request response to JSON
-        jsonResponse = JSON.parse(response)
-
-        # Parse the JSON representation into a RoutificApi::Route object
-        RoutificApi::Route.parse(jsonResponse)
+        return JSON.parse(response)
       rescue => e
         puts e
         errorResponse = JSON.parse e.response.body
