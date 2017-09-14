@@ -1,8 +1,9 @@
 module RoutificApi
   # This class represents a job returned by vrp-long 
   class Job
-    attr_reader :input, :id, :status, :created_at, :finished_at, :output, :routific
-    STATUSES = ['pending-geocode', 'pending', 'processing', 'finished', 'error']
+    FIELDS = [:status, :created_at, :finished_at, :output]
+    attr_reader *FIELDS
+    attr_reader :input, :id, :routific
 
     # Constructor
     def initialize(id, input, routific)
@@ -13,7 +14,10 @@ module RoutificApi
     end
 
     def update
-      @routific.updateJob(@id)
+      job_data = @routific.get_job(@id)
+      FIELDS.each do |field|
+        set_instance_variable "@#{field}", job_data[field.to_str]
+      end
     end
   end
 end
