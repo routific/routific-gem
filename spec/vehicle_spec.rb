@@ -32,6 +32,10 @@ describe RoutificApi::Vehicle do
       expect(vehicle.strict_start).to eq(Factory::VEHICLE_STRICT_START)
     end
 
+    it "has min_visits" do
+      expect(vehicle.min_visits).to eq(Factory::VEHICLE_MIN_VISITS)
+    end
+
     describe "#as_json" do
       subject(:vehicleJSON) { vehicle.as_json }
 
@@ -53,6 +57,14 @@ describe RoutificApi::Vehicle do
 
       it "has capacity" do
         expect(vehicleJSON["capacity"]).to eq(Factory::VEHICLE_CAPACITY)
+      end
+
+      it "has strict_start" do
+        expect(vehicleJSON["strict_start"]).to eq(Factory::VEHICLE_STRICT_START)
+      end
+
+      it "has min_visits" do
+        expect(vehicleJSON["min_visits"]).to eq(Factory::VEHICLE_MIN_VISITS)
       end
     end
   end
@@ -100,6 +112,14 @@ describe RoutificApi::Vehicle do
 
       it "does not have capacity" do
         expect( vehicleJSON["capacity"] ).to be_nil
+      end
+
+      it "does not have strict_start" do
+        expect( vehicleJSON["strict_start"] ).to be_nil
+      end
+
+      it "does not have min_visits" do
+        expect( vehicleJSON["min_visits"] ).to be_nil
       end
     end
   end
