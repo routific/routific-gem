@@ -69,17 +69,23 @@ class Factory
   })
 
   # Factory and constants for route
-  ROUTE_STATUS = Faker::Lorem.word
-  ROUTE_UNSERVED = { Faker::Lorem.word => Faker::Lorem.word }
-  ROUTE_TOTAL_IDLE_TIME = 10
-  ROUTE_TOTAL_TRAVEL_TIME = 20
-  ROUTE = RoutificApi::Route.new(
-    status: ROUTE_STATUS,
-    unserved: ROUTE_UNSERVED,
-    num_unserved: ROUTE_UNSERVED.keys.length,
-    total_idle_time: ROUTE_TOTAL_IDLE_TIME,
-    total_travel_time: ROUTE_TOTAL_TRAVEL_TIME
-  )
+  ROUTE_INPUT = {
+    status: Faker::Lorem.word,
+    unserved: { Faker::Lorem.word => Faker::Lorem.word },
+    num_unserved: 1,
+    distances: { Faker::Lorem.word => 10 },
+    total_distance: 10,
+    total_working_time: 20,
+    total_travel_time: 30,
+    total_break_time: 40,
+    total_idle_time: 50,
+    total_visit_lateness: 60,
+    num_late_visits: 2,
+    vehicle_overtime: 70,
+    total_overtime: 80
+  }
+  ROUTE = RoutificApi::Route.new(ROUTE_INPUT)
+
 
   # Factory and constants for options
   ROUTE_OPTIONS_TRAFFIC = "slow"
