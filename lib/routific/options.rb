@@ -8,15 +8,10 @@ module RoutificApi
     def initialize(params)
       # Validates the provided parameters
       validate(params)
-
-      @traffic = params["traffic"]
-      @min_visits_per_vehicle = params["min_visits_per_vehicle"]
-      @balance = params["balance"]
-      @min_vehicles = params["min_vehicles"]
-      @shortest_distance = params["shortest_distance"]
-      @squash_durations = params["squash_durations"]
-      @max_visit_lateness = params["max_visit_lateness"]
-      @max_vehicle_overtime = params["max_vehicle_overtime"]
+      
+      VALID_PARAMS.each do |param|
+        instance_variable_set "@#{param}", params[param]
+      end
     end
 
     def to_json(options)
@@ -27,12 +22,11 @@ module RoutificApi
     # def to_json(options = nil)
     def as_json(options = nil)
       jsonData = {}
-      jsonData["traffic"] = self.traffic if self.traffic
-      jsonData["min_visits_per_vehicle"] = self.min_visits_per_vehicle if self.min_visits_per_vehicle
-      jsonData["balance"] = self.balance if self.balance
-      jsonData["shortest_distance"] = self.shortest_distance if self.shortest_distance
-      jsonData["min_vehicles"] = self.min_vehicles if self.min_vehicles
-
+      
+      VALID_PARAMS.each do |param|
+        instance_var = instance_variable_get "@#{param}"
+        jsonData[param] = instance_var if instance_var
+      end
       jsonData
     end
 

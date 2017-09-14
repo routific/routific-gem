@@ -93,12 +93,18 @@ class Factory
   ROUTE_OPTIONS_BALANCE = "false"
   ROUTE_OPTIONS_MIN_VEHICLES = "false"
   ROUTE_OPTIONS_SHORTEST_DISTANCE = "false"
+  ROUTE_OPTIONS_SQUASH_DURATIONS = 1
+  ROUTE_OPTIONS_MAX_VEHICLE_OVERTIME = 10
+  ROUTE_OPTIONS_MAX_VISIT_LATENESS = 20
   ROUTE_OPTIONS_PARAMS = {
     "traffic"                => ROUTE_OPTIONS_TRAFFIC,
     "min_visits_per_vehicle" => ROUTE_OPTIONS_MIN_VISITS_PER_VEHICLE,
     "balance"                => ROUTE_OPTIONS_BALANCE,
     "min_vehicles"           => ROUTE_OPTIONS_MIN_VEHICLES,
-    "shortest_distance"      => ROUTE_OPTIONS_SHORTEST_DISTANCE
+    "shortest_distance"      => ROUTE_OPTIONS_SHORTEST_DISTANCE,
+    "squash_durations"       => ROUTE_OPTIONS_SQUASH_DURATIONS,
+    "max_vehicle_overtime"   => ROUTE_OPTIONS_MAX_VEHICLE_OVERTIME,
+    "max_visit_lateness"     => ROUTE_OPTIONS_MAX_VISIT_LATENESS
   }
   ROUTE_OPTIONS = RoutificApi::Options.new(ROUTE_OPTIONS_PARAMS)
 end
