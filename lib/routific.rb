@@ -1,6 +1,3 @@
-require 'rest-client'
-require 'json'
-
 require_relative './routific/location'
 require_relative './routific/visit'
 require_relative './routific/vehicle'
@@ -9,10 +6,11 @@ require_relative './routific/way_point'
 require_relative './routific/options'
 require_relative './routific/job'
 
+require_relative './util'
+
 # Main class of this gem
 class Routific
   attr_reader :token, :visits, :fleet, :options
-  BASE_URL = 'https://api.routific.com/v1/'
 
   # Constructor
   # token: Access token for Routific API
@@ -61,12 +59,12 @@ class Routific
     }
 
     data[:options] = options if options
-    result = Routific.send_request("POST", "vrp-long", token, data)
+    result = Util.send_request("POST", "vrp-long", Routific.validate_and_prefix_token(token), data)
     RoutificApi::Job.new(result["job_id"], data, self)
   end
 
   def update_job(job_id)
-    Routific.send_request("GET", "jobs/#{job_id}", token)
+    Util.send_request("GET", "jobs/#{job_id}")
   end
 
   class << self
@@ -83,41 +81,10 @@ class Routific
     # If no access token is provided, the default access token previously set is used
     # If the default access token either is nil or has not been set, an ArgumentError is raised
     def getRoute(data, token = @@token)
-      result = send_request("POST", "vrp", token, data)
+      result = Util.send_request("POST", "vrp", validate_and_prefix_token(token), data)
       RoutificApi::Route.parse(result)
     end
 
-    ##
-    # method: "GET", "POST"
-    # endpoint: "vrp", "vrp-long", "job"
-    # token: if nil, raise ArgumentError; if missing "bearer", prefix
-    # data: only for POST requests
-    #
-    def send_request(method, endpoint, token, data = nil)
-      url = BASE_URL + endpoint
-      headers = {
-        'Authorization' => validate_and_prefix_token(token),
-        content_type: :json,
-        accept: :json
-      }
-      begin
-        # Sends HTTP request to Routific API server
-        response = nil
-        if method == 'GET'
-          response = RestClient.get(url, headers)
-        elsif method == 'POST'
-          response = RestClient.post(url, data.to_json, headers)
-        end
-
-        return JSON.parse(response)
-      rescue => e
-        puts e
-        errorResponse = JSON.parse e.response.body
-        puts "Received HTTP #{e.message}: #{errorResponse["error"]}"
-        nil end
-    end
-
-    private
     def validate_and_prefix_token(token)
       if token.nil?
         raise ArgumentError, "access token must be set"
