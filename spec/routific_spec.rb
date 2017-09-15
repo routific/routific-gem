@@ -142,9 +142,8 @@ describe Routific do
         expect(job.id).to be_instance_of(String)
         expect(job.input).to be_instance_of(Hash)
         expect(job.status).to eq('pending')
-        expect(job.routific).to eq(routific)
         sleep 1
-        expect(job.update).to eq('finished')
+        expect(job.fetch).to eq('finished')
         expect(job.route).to be_instance_of(RoutificApi::Route)
       end
     end

@@ -1,4 +1,5 @@
 require_relative './helper/spec_helper'
+require_relative '../lib/util'
 
 describe RoutificApi::Job do
   describe "valid parameters" do
@@ -16,17 +17,10 @@ describe RoutificApi::Job do
       expect(job.input).to eq(Factory::JOB_INPUT)
     end
 
-    it "has routific instance" do
-      expect(job.routific).to eq(Factory::JOB_ROUTIFIC_INSTANCE)
-    end
-
-    describe "update" do
+    describe "fetch" do
       before do
-        job.update
-      end
-
-      it "calls job.routific.update_job with the job id" do
-        expect(job.routific.job_id).to eq(Factory::JOB_ID)
+        allow(Util).to receive(:send_request) { Factory::JOB_PARAMS }
+        job.fetch
       end
 
       Factory::JOB_PARAMS.each do |key, value|

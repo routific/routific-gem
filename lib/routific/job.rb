@@ -3,18 +3,18 @@ module RoutificApi
   class Job
     FIELDS = [:status, :created_at, :finished_at]
     attr_reader *FIELDS
-    attr_reader :input, :id, :routific, :route
+    attr_reader :input, :id, :route
 
     # Constructor
-    def initialize(id, input, routific)
+    def initialize(id, input)
       @id = id
       @input = input
-      @routific = routific
       @status = 'pending'
     end
 
-    def update
-      job_data = @routific.update_job(@id)
+    def fetch
+      job_data = Util.send_request("GET", "jobs/#{@id}")
+
       FIELDS.each do |field|
         instance_variable_set "@#{field}", job_data[field.to_s]
       end

@@ -121,16 +121,5 @@ class Factory
     "finished_at" => "2001-00-00 00:00:00.000Z",
     "output" => ROUTE_PARAMS_STRING
   }
-
-  class RoutificMock
-    attr_reader :job_id
-
-    def update_job(job_id)
-      @job_id = job_id
-      JOB_PARAMS
-    end
-  end
-
-  JOB_ROUTIFIC_INSTANCE = RoutificMock.new
-  JOB = RoutificApi::Job.new(JOB_ID, JOB_INPUT, JOB_ROUTIFIC_INSTANCE)
+  JOB = RoutificApi::Job.new(JOB_ID, JOB_INPUT)
 end

@@ -60,11 +60,7 @@ class Routific
 
     data[:options] = options if options
     result = Util.send_request("POST", "vrp-long", Routific.validate_and_prefix_token(token), data)
-    RoutificApi::Job.new(result["job_id"], data, self)
-  end
-
-  def update_job(job_id)
-    Util.send_request("GET", "jobs/#{job_id}")
+    RoutificApi::Job.new(result["job_id"], data)
   end
 
   class << self
