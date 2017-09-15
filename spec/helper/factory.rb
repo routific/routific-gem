@@ -69,16 +69,33 @@ class Factory
   })
 
   # Factory and constants for route
-  ROUTE_STATUS = Faker::Lorem.word
-  ROUTE_UNSERVED = { Faker::Lorem.word => Faker::Lorem.word }
-  ROUTE_TOTAL_IDLE_TIME = 10
-  ROUTE_TOTAL_TRAVEL_TIME = 20
-  ROUTE = RoutificApi::Route.new(
-    status: ROUTE_STATUS,
-    unserved: ROUTE_UNSERVED,
-    total_idle_time: ROUTE_TOTAL_IDLE_TIME,
-    total_travel_time: ROUTE_TOTAL_TRAVEL_TIME
-  )
+  ROUTE_INPUT = {
+    status: Faker::Lorem.word,
+    unserved: { Faker::Lorem.word => Faker::Lorem.word },
+    num_unserved: 1,
+    distances: { Faker::Lorem.word => 10 },
+    total_distance: 10,
+    total_working_time: 20,
+    total_travel_time: 30,
+    total_break_time: 40,
+    total_idle_time: 50,
+    total_visit_lateness: 60,
+    num_late_visits: 2,
+    vehicle_overtime: 70,
+    total_overtime: 80
+  }
+  ROUTE = RoutificApi::Route.new(ROUTE_INPUT)
+  SOLUTION = {
+    "vehicle" => [
+      {"location_id" => "start", "location_name" => "start", "arrival_time" => "08:00"},
+      {"location_id" => "v1", "location_name" => "v1", "arrival_time" => "08:10", "finish_time" => "08:20"},
+      {"location_id" => "v2", "location_name" => "v2", "arrival_time" => "08:30"}
+    ]
+  }
+  ROUTE_INPUT_WITH_SOLUTION = ROUTE_INPUT.clone
+  ROUTE_INPUT_WITH_SOLUTION[:solution] = SOLUTION
+  ROUTE_WITH_SOLUTION = RoutificApi::Route.new(ROUTE_INPUT_WITH_SOLUTION)
+
 
   # Factory and constants for options
   ROUTE_OPTIONS_TRAFFIC = "slow"
@@ -86,12 +103,18 @@ class Factory
   ROUTE_OPTIONS_BALANCE = "false"
   ROUTE_OPTIONS_MIN_VEHICLES = "false"
   ROUTE_OPTIONS_SHORTEST_DISTANCE = "false"
+  ROUTE_OPTIONS_SQUASH_DURATIONS = 1
+  ROUTE_OPTIONS_MAX_VEHICLE_OVERTIME = 10
+  ROUTE_OPTIONS_MAX_VISIT_LATENESS = 20
   ROUTE_OPTIONS_PARAMS = {
     "traffic"                => ROUTE_OPTIONS_TRAFFIC,
     "min_visits_per_vehicle" => ROUTE_OPTIONS_MIN_VISITS_PER_VEHICLE,
     "balance"                => ROUTE_OPTIONS_BALANCE,
     "min_vehicles"           => ROUTE_OPTIONS_MIN_VEHICLES,
-    "shortest_distance"      => ROUTE_OPTIONS_SHORTEST_DISTANCE
+    "shortest_distance"      => ROUTE_OPTIONS_SHORTEST_DISTANCE,
+    "squash_durations"       => ROUTE_OPTIONS_SQUASH_DURATIONS,
+    "max_vehicle_overtime"   => ROUTE_OPTIONS_MAX_VEHICLE_OVERTIME,
+    "max_visit_lateness"     => ROUTE_OPTIONS_MAX_VISIT_LATENESS
   }
   ROUTE_OPTIONS = RoutificApi::Options.new(ROUTE_OPTIONS_PARAMS)
 end

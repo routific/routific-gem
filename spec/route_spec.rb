@@ -3,24 +3,37 @@ require_relative './helper/spec_helper'
 describe RoutificApi::Route do
   subject(:route) { Factory::ROUTE }
 
-  it "has status" do
-    expect(route.status).to eq(Factory::ROUTE_STATUS)
+  Factory::ROUTE_INPUT.each do |key, value|
+    it "has #{key}" do
+      expect(eval("route.#{key}")).to eq(value)
+    end
   end
 
-  it "has total_travel_time" do
-    expect(route.total_travel_time).to eq(Factory::ROUTE_TOTAL_TRAVEL_TIME)
-  end
+  describe "parses solution hash into waypoints" do
+    subject(:route_with_solution) { Factory::ROUTE_WITH_SOLUTION }
 
-  it "has total_idle_time" do
-    expect(route.total_idle_time).to eq(Factory::ROUTE_TOTAL_IDLE_TIME)
-  end
+    Factory::ROUTE_INPUT_WITH_SOLUTION.each do |key, value|
+      next if key == :solution
+      it "has #{key}" do
+        expect(eval("route_with_solution.#{key}")).to eq(value)
+      end
+    end
 
-  it "has unserved" do
-    expect(route.unserved).to eq(Factory::ROUTE_UNSERVED)
-  end
-
-  it "has number_of_unserved" do
-    expect(route.number_of_unserved).to eq(Factory::ROUTE_UNSERVED.count)
+    it "has vehicleRoutes" do
+      vehicle_routes = route_with_solution.vehicleRoutes
+      expect(vehicle_routes).to be_instance_of(Hash)
+      expect(vehicle_routes.length).to eq(1)
+      expect(vehicle_routes).to have_key("vehicle")
+      waypoints = vehicle_routes["vehicle"]
+      expect(waypoints).to be_instance_of(Array)
+      expect(waypoints.length).to eq(3)
+      3.times do |i|
+        expect(waypoints[i]).to be_instance_of(RoutificApi::WayPoint)
+        Factory::SOLUTION["vehicle"][i].each do |key, value|
+          expect(eval("waypoints[i].#{key}")).to eq(value)
+        end
+      end
+    end
   end
 
   describe "#vehicleRoutes" do
