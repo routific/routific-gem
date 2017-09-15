@@ -107,4 +107,30 @@ class Factory
     "max_visit_lateness"     => ROUTE_OPTIONS_MAX_VISIT_LATENESS
   }
   ROUTE_OPTIONS = RoutificApi::Options.new(ROUTE_OPTIONS_PARAMS)
+
+  # Factory and constants for job
+  JOB_ID = Faker::Lorem.word
+  JOB_INPUT = { visits: { Faker::Lorem.word => VISIT },
+                fleet: { Faker::Lorem.word => VEHICLE } },
+  ROUTE_PARAMS_STRING = {}
+  ROUTE_INPUT.each { |k, v| ROUTE_PARAMS_STRING[k.to_s] = v }
+  JOB_PARAMS = {
+    "id" => JOB_ID,
+    "status" => Faker::Lorem.word,
+    "created_at" => "2000-00-00 00:00:00.000Z",
+    "finished_at" => "2001-00-00 00:00:00.000Z",
+    "output" => ROUTE_PARAMS_STRING
+  }
+
+  class RoutificMock
+    attr_reader :job_id
+
+    def update_job(job_id)
+      @job_id = job_id
+      JOB_PARAMS
+    end
+  end
+
+  JOB_ROUTIFIC_INSTANCE = RoutificMock.new
+  JOB = RoutificApi::Job.new(JOB_ID, JOB_INPUT, JOB_ROUTIFIC_INSTANCE)
 end
