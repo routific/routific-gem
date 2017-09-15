@@ -24,12 +24,14 @@ class Factory
     "lat" => Faker::Address.latitude.to_f,
     "lng" => Faker::Address.longitude.to_f,
   }
+  VISIT_PRIORITY = Faker::Number.digit
   VISIT_PARAMS = {
     "start"     => VISIT_START,
     "end"       => VISIT_END,
     "duration"  => VISIT_DURATION,
     "demand"    => VISIT_DEMAND,
-    "location"  => VISIT_LOCATION
+    "location"  => VISIT_LOCATION,
+    "priority"    => VISIT_PRIORITY
   }
   VISIT = RoutificApi::Visit.new(VISIT_ID, VISIT_PARAMS)
 

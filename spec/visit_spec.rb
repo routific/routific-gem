@@ -24,6 +24,10 @@ describe RoutificApi::Location do
       expect(visit.demand).to eq(Factory::VISIT_DEMAND)
     end
 
+    it "has priority" do
+      expect(visit.priority).to eq(Factory::VISIT_PRIORITY)
+    end
+
     describe "#as_json" do
       subject(:visitJSON) { visit.as_json() }
 
@@ -45,6 +49,10 @@ describe RoutificApi::Location do
 
       it "has demand" do
         expect(visitJSON["demand"]).to eq(Factory::VISIT_DEMAND)
+      end
+
+      it "has priority" do
+        expect(visitJSON["priority"]).to eq(Factory::VISIT_PRIORITY)
       end
     end
   end
@@ -85,6 +93,10 @@ describe RoutificApi::Location do
 
       it "does not have demand" do
         expect(visitJSON["demand"]).to be_nil
+      end
+
+      it "does not have priority" do
+        expect(visitJSON["priority"]).to be_nil
       end
 
       it "has location" do
