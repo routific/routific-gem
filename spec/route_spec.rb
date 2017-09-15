@@ -9,6 +9,33 @@ describe RoutificApi::Route do
     end
   end
 
+  describe "parses solution hash into waypoints" do
+    subject(:route_with_solution) { Factory::ROUTE_WITH_SOLUTION }
+
+    Factory::ROUTE_INPUT_WITH_SOLUTION.each do |key, value|
+      next if key == :solution
+      it "has #{key}" do
+        expect(eval("route_with_solution.#{key}")).to eq(value)
+      end
+    end
+
+    it "has vehicleRoutes" do
+      vehicle_routes = route_with_solution.vehicleRoutes
+      expect(vehicle_routes).to be_instance_of(Hash)
+      expect(vehicle_routes.length).to eq(1)
+      expect(vehicle_routes).to have_key("vehicle")
+      waypoints = vehicle_routes["vehicle"]
+      expect(waypoints).to be_instance_of(Array)
+      expect(waypoints.length).to eq(3)
+      3.times do |i|
+        expect(waypoints[i]).to be_instance_of(RoutificApi::WayPoint)
+        Factory::SOLUTION["vehicle"][i].each do |key, value|
+          expect(eval("waypoints[i].#{key}")).to eq(value)
+        end
+      end
+    end
+  end
+
   describe "#vehicleRoutes" do
     it "is a Hash" do
       expect(route.vehicleRoutes).to be_instance_of(Hash)

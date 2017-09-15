@@ -85,6 +85,16 @@ class Factory
     total_overtime: 80
   }
   ROUTE = RoutificApi::Route.new(ROUTE_INPUT)
+  SOLUTION = {
+    "vehicle" => [
+      {"location_id" => "start", "location_name" => "start", "arrival_time" => "08:00"},
+      {"location_id" => "v1", "location_name" => "v1", "arrival_time" => "08:10", "finish_time" => "08:20"},
+      {"location_id" => "v2", "location_name" => "v2", "arrival_time" => "08:30"}
+    ]
+  }
+  ROUTE_INPUT_WITH_SOLUTION = ROUTE_INPUT.clone
+  ROUTE_INPUT_WITH_SOLUTION[:solution] = SOLUTION
+  ROUTE_WITH_SOLUTION = RoutificApi::Route.new(ROUTE_INPUT_WITH_SOLUTION)
 
 
   # Factory and constants for options
