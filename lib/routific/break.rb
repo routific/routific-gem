@@ -24,6 +24,13 @@ module RoutificApi
       @in_transit = params["in_transit"] unless params["in_transit"].nil?
     end
 
+    def ==(another_break)
+      self.id == another_break.id &&
+        self.start == another_break.start &&
+        self.end == another_break.end &&
+        self.in_transit == another_break.in_transit
+    end
+
     def to_json(options = nil)
       as_json(options).to_json
     end

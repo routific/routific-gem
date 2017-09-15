@@ -40,6 +40,11 @@ describe RoutificApi::Vehicle do
       expect(vehicle.speed).to eq(Factory::VEHICLE_SPEED)
     end
 
+    it "has breaks" do
+      expect(vehicle.breaks.kind_of?(Array)).to be(true)
+      expect(vehicle.breaks[0]).to eq(RoutificApi::Break.new(Factory::BREAK_PARAMS))
+    end
+
     describe "#as_json" do
       subject(:vehicleJSON) { vehicle.as_json }
 
@@ -73,6 +78,10 @@ describe RoutificApi::Vehicle do
 
       it "has speed" do
         expect(vehicleJSON["speed"]).to eq(Factory::VEHICLE_SPEED)
+      end
+
+      it "has breaks" do
+        expect(vehicleJSON["breaks"]).to eq(Factory::VEHICLE_BREAKS)
       end
     end
   end
@@ -132,6 +141,10 @@ describe RoutificApi::Vehicle do
 
       it "does not have speed" do
         expect( vehicleJSON["speed"] ).to be_nil
+      end
+
+      it "does not have breaks" do
+        expect( vehicleJSON["breaks"] ).to be_nil
       end
     end
   end

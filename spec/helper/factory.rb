@@ -63,6 +63,7 @@ class Factory
   VEHICLE_STRICT_START = Faker::Boolean.boolean
   VEHICLE_MIN_VISITS = Faker::Number.digit
   VEHICLE_SPEED = Faker::Number.digit
+  VEHICLE_BREAKS = [BREAK_PARAMS]
   VEHICLE_PARAMS = {
     "start_location"  => VEHICLE_START_LOCATION,
     "end_location"    => VEHICLE_END_LOCATION,
@@ -71,7 +72,8 @@ class Factory
     "capacity"        => VEHICLE_CAPACITY,
     "strict_start"    => VEHICLE_STRICT_START,
     "min_visits"      => VEHICLE_MIN_VISITS,
-    "speed"           => VEHICLE_SPEED
+    "speed"           => VEHICLE_SPEED,
+    "breaks"          => VEHICLE_BREAKS
     }
   VEHICLE = RoutificApi::Vehicle.new(VEHICLE_ID, VEHICLE_PARAMS)
 
