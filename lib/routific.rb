@@ -3,6 +3,7 @@ require 'json'
 
 require_relative './routific/location'
 require_relative './routific/visit'
+require_relative './routific/break'
 require_relative './routific/vehicle'
 require_relative './routific/route'
 require_relative './routific/way_point'

@@ -33,6 +33,19 @@ class Factory
   }
   VISIT = RoutificApi::Visit.new(VISIT_ID, VISIT_PARAMS)
 
+  # Factoru and constants for break
+  BREAK_ID = Faker::Lorem.word
+  BREAK_START = "12:00"
+  BREAK_END = "12:30"
+  BREAK_IN_TRANSIT = Faker::Boolean.boolean
+  BREAK_PARAMS = {
+    "id" => BREAK_ID,
+    "start" => BREAK_START,
+    "end" => BREAK_END,
+    "in_transit" => BREAK_IN_TRANSIT
+  }
+  BREAK = RoutificApi::Break.new(BREAK_PARAMS)
+
   # Factory and constants for vehicle
   VEHICLE_ID = Faker::Lorem.word
   VEHICLE_NAME = Faker::Lorem.word
