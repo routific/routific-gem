@@ -76,33 +76,37 @@ describe Routific do
       end
     end
 
+    def set_visit_and_vehicle(routific)
+      routific.setVisit("order_1", {
+        "start" => "9:00",
+        "end" => "12:00",
+        "duration" => 10,
+        "location" => {
+          "name" => "6800 Cambie",
+          "lat" => 49.227107,
+          "lng" => -123.1163085,
+        }
+      })
+
+      routific.setVehicle("vehicle_1", {
+        "start_location" => {
+          "name" => "800 Kingsway",
+          "lat" => 49.2553636,
+          "lng" => -123.0873365,
+        },
+        "end_location" => {
+          "name" => "800 Kingsway",
+          "lat" => 49.2553636,
+          "lng" => -123.0873365,
+        },
+        "shift_start" => "8:00",
+        "shift_end" => "12:00",
+      })
+    end
+
     describe "#getRoute" do
       before do
-        routific.setVisit("order_1", {
-          "start" => "9:00",
-          "end" => "12:00",
-          "duration" => 10,
-          "location" => {
-            "name" => "6800 Cambie",
-            "lat" => 49.227107,
-            "lng" => -123.1163085,
-          }
-        })
-
-        routific.setVehicle("vehicle_1", {
-          "start_location" => {
-            "name" => "800 Kingsway",
-            "lat" => 49.2553636,
-            "lng" => -123.0873365,
-          },
-          "end_location" => {
-            "name" => "800 Kingsway",
-            "lat" => 49.2553636,
-            "lng" => -123.0873365,
-          },
-          "shift_start" => "8:00",
-          "shift_end" => "12:00",
-        })
+        set_visit_and_vehicle routific
       end
 
       it "returns a Route instance" do
@@ -123,6 +127,25 @@ describe Routific do
 
         route = routific.getRoute()
         expect(route).to be_instance_of(RoutificApi::Route)
+      end
+    end
+
+    describe "#get_route_async" do
+      before do
+        job = nil
+        set_visit_and_vehicle routific
+      end
+
+      it "returns a Job instance" do
+        job = routific.get_route_async()
+        expect(job).to be_instance_of(RoutificApi::Job)
+        expect(job.id).to be_instance_of(String)
+        expect(job.input).to be_instance_of(Hash)
+        expect(job.status).to eq('pending')
+        expect(job.routific).to eq(routific)
+        sleep 1
+        expect(job.update).to eq('finished')
+        expect(job.route).to be_instance_of(RoutificApi::Route)
       end
     end
   end
