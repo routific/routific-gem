@@ -28,6 +28,11 @@ describe RoutificApi::Location do
       expect(visit.priority).to eq(Factory::VISIT_PRIORITY)
     end
 
+    it "has time_windows" do
+      expect(visit.time_windows.kind_of?(Array)).to be(true)
+      expect(visit.time_windows[0]).to eq(Factory::TIME_WINDOW)
+    end
+
     describe "#as_json" do
       subject(:visitJSON) { visit.as_json() }
 
@@ -53,6 +58,10 @@ describe RoutificApi::Location do
 
       it "has priority" do
         expect(visitJSON["priority"]).to eq(Factory::VISIT_PRIORITY)
+      end
+
+      it "has time_windows" do
+        expect(visitJSON["time_windows"]).to eq(Factory::VISIT_TIME_WINDOWS)
       end
     end
   end
