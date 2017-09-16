@@ -34,4 +34,8 @@ module Util
       nil
     end
   end
+
+  def self.prefix_token(token)
+    (/bearer /.match(token).nil?) ? "bearer #{token}" : token
+  end
 end

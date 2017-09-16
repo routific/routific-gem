@@ -14,8 +14,9 @@ class Routific
 
   # Constructor
   # token: Access token for Routific API
-  def initialize(token)
-    @token = token
+  def initialize()
+    Routific.validate_token
+    @token = Routific.token
     @visits = {}
     @fleet = {}
     @options = {}
@@ -49,7 +50,8 @@ class Routific
     }
 
     data[:options] = options if options
-    Routific.getRoute(data, token)
+    result = Util.send_request("POST", "vrp", Routific.token, data)
+    RoutificApi::Route.parse(result)
   end
 
   def get_route_async
@@ -59,7 +61,7 @@ class Routific
     }
 
     data[:options] = options if options
-    result = Util.send_request("POST", "vrp-long", Routific.validate_and_prefix_token(token), data)
+    result = Util.send_request("POST", "vrp-long", Routific.token, data)
     RoutificApi::Job.new(result["job_id"], data)
   end
 
@@ -67,27 +69,17 @@ class Routific
     # Sets the default access token to use
     def setToken(token)
       @@token = token
+      validate_token
+      @@token = Util.prefix_token(@@token)
     end
 
     def token
       @@token
     end
 
-    # Returns the route using the specified access token, visits and fleet information
-    # If no access token is provided, the default access token previously set is used
-    # If the default access token either is nil or has not been set, an ArgumentError is raised
-    def getRoute(data, token = @@token)
-      result = Util.send_request("POST", "vrp", validate_and_prefix_token(token), data)
-      RoutificApi::Route.parse(result)
+    def validate_token
+      raise ArgumentError, "access token must be set" if token.nil?
     end
 
-    def validate_and_prefix_token(token)
-      if token.nil?
-        raise ArgumentError, "access token must be set"
-      end
-
-      # Prefix the token with "bearer " if missing during assignment
-      (/bearer /.match(token).nil?) ? "bearer #{token}" : token
-    end
   end
 end
