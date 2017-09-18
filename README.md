@@ -20,9 +20,9 @@ Remember to require it and set your token before using it
 
 ```ruby
 require 'routific'
-routific = Routific.setToken(--API_KEY--)
+routific = Routific.set_token(--API_KEY--)
 
-routific.setVisit("order_1", {
+routific.set_visit("order_1", {
   "start" => "9:00",
   "end" => "12:00",
   "duration" => 10,
@@ -33,7 +33,7 @@ routific.setVisit("order_1", {
   }
 })
 
-routific.setVisit("order_2", {
+routific.set_visit("order_2", {
   "start" => "9:00",
   "end" => "12:00",
   "duration" => 10,
@@ -44,7 +44,7 @@ routific.setVisit("order_2", {
   }
 })
 
-routific.setVehicle("vehicle_1", {
+routific.set_vehicle("vehicle_1", {
   "start_location" => {
     "name" => "800 Kingsway",
     "lat" => 49.2553636,
@@ -59,12 +59,12 @@ routific.setVehicle("vehicle_1", {
   "shift_end" => "12:00",
 })
 
-route = routific.getRoute()
+route = routific.get_route()
 ```
 
 ### Class methods
 
-`Routific.setToken( token )` sets the authentication token to use.
+`Routific.set_token( token )` sets the authentication token to use.
 
 ### Instance methods
 
@@ -141,7 +141,7 @@ puts job.status # => "finished"
 route = job.route
 ```
 
-`get_route_async` returns a job object with the following attibutes:
+It returns a job object with the following attibutes:
 - `status`: status of the task ('pending', 'processing', 'finished', 'error')
 - `id`: a unique identifier for the task
 - `created_at`, `finished_at`: creation and finish times
