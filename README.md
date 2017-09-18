@@ -1,7 +1,7 @@
 Routific Ruby Gem
 =================
 
-[![Build Status](https://secure.travis-ci.org/routific/routific-gem.png)](http://travis-ci.org/routific/routific-gem)
+[![Build Status](https://travis-ci.org/routific/routific-gem.svg?branch=master)](https://travis-ci.org/routific/routific-gem)
 
 This Ruby Gem assists users to easily access the [Routific API][1], which is a practical and scalable solution to the Vehicle Routing Problem.
 
