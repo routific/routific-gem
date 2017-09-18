@@ -82,7 +82,8 @@ Sets a visit with the specified id and parameters:
 - `demand`: the capacity that this visit requires
 - `priority`: higher priority visits are more likely to be served
 - `type`: restrict the vehicle that can serve this visit
-- `time_windows`: specify different time-windows for serving the visit
+- `time_windows`: specify different time-windows for serving the visit.
+It should be an array of hashes: `[ { "start" => "08:00", "end" => "12:00" } ]`
 
 #### `routific.set_vehicle( id, params )`
 
