@@ -10,14 +10,12 @@ require_relative './util'
 
 # Main class of this gem
 class Routific
-  attr_reader :token, :visits, :fleet, :options
+  attr_reader :visits, :fleet, :options
   @@token = nil
 
   # Constructor
-  # token: Access token for Routific API
   def initialize()
     Routific.validate_token
-    @token = Routific.token
     @visits = {}
     @fleet = {}
     @options = {}
@@ -79,7 +77,7 @@ class Routific
     end
 
     def validate_token
-      raise ArgumentError, "access token must be set" if token.nil?
+      raise ArgumentError, "access token must be set" if @@token.nil?
     end
 
   end

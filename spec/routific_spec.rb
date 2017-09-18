@@ -20,7 +20,7 @@ describe Routific do
     end
 
     it "has token" do
-      expect(routific.token).to eq(Util.prefix_token(ENV["API_KEY"]))
+      expect(Routific.token).to eq(Util.prefix_token(ENV["API_KEY"]))
     end
 
     describe "#visits" do
