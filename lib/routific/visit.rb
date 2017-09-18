@@ -1,7 +1,8 @@
 module RoutificApi
   # This class represents a location to be visited
   class Visit
-    attr_reader :id, :start, :end, :duration, :demand, :location
+    attr_reader :id, :start, :end, :duration, :demand, :location, :priority,
+      :time_windows
 
     # Constructor
     #
@@ -19,6 +20,10 @@ module RoutificApi
       @duration = params["duration"]
       @demand = params["demand"]
       @location = RoutificApi::Location.new(params["location"])
+      @priority = params["priority"]
+      if params["time_windows"]
+        @time_windows = params["time_windows"].map{ |tw| TimeWindow.new(tw) }
+      end
     end
 
     def to_json(options)
@@ -34,6 +39,10 @@ module RoutificApi
       jsonData["duration"] = self.duration if self.duration
       jsonData["demand"] = self.demand if self.demand
       jsonData["location"] = self.location.as_json
+      jsonData["priority"] = self.priority if self.priority
+      if self.time_windows
+        jsonData["time_windows"] = self.time_windows.map{ |tw| tw.as_json }
+      end
 
       jsonData
     end
@@ -45,6 +54,34 @@ module RoutificApi
     def validate(params)
       if params["location"].nil?
         raise ArgumentError, "'location' parameter must be provided"
+      end
+    end
+
+    public
+    class TimeWindow
+      attr_reader :start, :end
+
+      # Constructor
+      #
+      # Optional arguments
+      # start: start of the time-window
+      # end: end of the time-window
+      def initialize(params)
+        @start = params["start"]
+        @end = params["end"]
+      end
+
+      def ==(another_tw)
+        self.start == another_tw.start &&
+          self.end == another_tw.end
+      end
+
+      def as_json
+        jsonData = {}
+        jsonData["start"] = self.start if self.start
+        jsonData["end"] = self.end if self.end
+
+        jsonData
       end
     end
   end

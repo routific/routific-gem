@@ -14,6 +14,13 @@ class Factory
     }
   LOCATION = RoutificApi::Location.new(LOCATION_PARAMS)
 
+  # Factory and constants for time-window
+  TIME_WINDOW_PARAMS = {
+    "start"  => "08:00",
+    "end"    => "18:00"
+  }
+  TIME_WINDOW = RoutificApi::Visit::TimeWindow.new(TIME_WINDOW_PARAMS)
+
   # Factory and constants for visit
   VISIT_ID = Faker::Lorem.word
   VISIT_START = "08:00"
@@ -24,12 +31,16 @@ class Factory
     "lat" => Faker::Address.latitude.to_f,
     "lng" => Faker::Address.longitude.to_f,
   }
+  VISIT_PRIORITY = Faker::Number.digit
+  VISIT_TIME_WINDOWS = [TIME_WINDOW_PARAMS]
   VISIT_PARAMS = {
-    "start"     => VISIT_START,
-    "end"       => VISIT_END,
-    "duration"  => VISIT_DURATION,
-    "demand"    => VISIT_DEMAND,
-    "location"  => VISIT_LOCATION
+    "start"        => VISIT_START,
+    "end"          => VISIT_END,
+    "duration"     => VISIT_DURATION,
+    "demand"       => VISIT_DEMAND,
+    "location"     => VISIT_LOCATION,
+    "priority"     => VISIT_PRIORITY,
+    "time_windows" => VISIT_TIME_WINDOWS
   }
   VISIT = RoutificApi::Visit.new(VISIT_ID, VISIT_PARAMS)
 
