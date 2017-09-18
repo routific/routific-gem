@@ -25,25 +25,25 @@ class Routific
   # Sets a visit for the specified location using the specified parameters
   # id: ID of location to visit
   # params: parameters for this visit
-  def setVisit(id, params={})
+  def set_visit(id, params={})
     visits[id] = RoutificApi::Visit.new(id, params)
   end
 
   # Sets a vehicle with the specified ID and parameters
   # id: vehicle ID
   # params: parameters for this vehicle
-  def setVehicle(id, params)
+  def set_vehicle(id, params)
     fleet[id] = RoutificApi::Vehicle.new(id, params)
   end
 
   # Sets options with the specified params
   # params: parameters for these options
-  def setOptions(params)
+  def set_options(params)
     @options = RoutificApi::Options.new(params)
   end
 
   # Returns the route using the previously provided visits and fleet information
-  def getRoute
+  def get_route
     data = {
       visits: visits,
       fleet: fleet
@@ -67,7 +67,7 @@ class Routific
 
   class << self
     # Sets the default access token to use
-    def setToken(token)
+    def set_token(token)
       @@token = token
       validate_token
       @@token = Util.prefix_token(@@token)

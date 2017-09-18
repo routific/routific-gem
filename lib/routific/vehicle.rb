@@ -43,21 +43,21 @@ module RoutificApi
     # Returns the JSON representation of this object
     # def to_json(options = nil)
     def as_json(options = nil)
-      jsonData = {}
-      jsonData["start_location"] = self.start_location.as_json
-      jsonData["end_location"] = self.end_location.as_json if self.end_location
-      jsonData["shift_start"] = self.shift_start if self.shift_start
-      jsonData["shift_end"] = self.shift_end if self.shift_end
-      jsonData["capacity"] = self.capacity if self.capacity
-      jsonData["strict_start"] = self.strict_start if not self.strict_start.nil?
-      jsonData["min_visits"] = self.min_visits if self.min_visits
-      jsonData["speed"] = self.speed if self.speed
-      jsonData["type"] = self.type if self.type
+      json_data = {}
+      json_data["start_location"] = self.start_location.as_json
+      json_data["end_location"] = self.end_location.as_json if self.end_location
+      json_data["shift_start"] = self.shift_start if self.shift_start
+      json_data["shift_end"] = self.shift_end if self.shift_end
+      json_data["capacity"] = self.capacity if self.capacity
+      json_data["strict_start"] = self.strict_start if not self.strict_start.nil?
+      json_data["min_visits"] = self.min_visits if self.min_visits
+      json_data["speed"] = self.speed if self.speed
+      json_data["type"] = self.type if self.type
       if self.breaks
-        jsonData["breaks"] = self.breaks.map{ |brk| brk.as_json }
+        json_data["breaks"] = self.breaks.map{ |brk| brk.as_json }
       end
 
-      jsonData
+      json_data
     end
 
 

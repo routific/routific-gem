@@ -19,8 +19,8 @@ describe RoutificApi::Route do
       end
     end
 
-    it "has vehicleRoutes" do
-      vehicle_routes = route_with_solution.vehicleRoutes
+    it "has vehicle_routes" do
+      vehicle_routes = route_with_solution.vehicle_routes
       expect(vehicle_routes).to be_instance_of(Hash)
       expect(vehicle_routes.length).to eq(1)
       expect(vehicle_routes).to have_key("vehicle")
@@ -36,9 +36,9 @@ describe RoutificApi::Route do
     end
   end
 
-  describe "#vehicleRoutes" do
+  describe "#vehicle_routes" do
     it "is a Hash" do
-      expect(route.vehicleRoutes).to be_instance_of(Hash)
+      expect(route.vehicle_routes).to be_instance_of(Hash)
     end
   end
 
@@ -47,12 +47,12 @@ describe RoutificApi::Route do
       route.add_way_point(Factory::VEHICLE_NAME, Factory::WAY_POINT)
     end
 
-    it "creates a new key in vehicleRoutes" do
-      expect(route.vehicleRoutes).to include(Factory::VEHICLE_NAME)
+    it "creates a new key in vehicle_routes" do
+      expect(route.vehicle_routes).to include(Factory::VEHICLE_NAME)
     end
 
-    it "stores new waypoint into vehicleRoutes" do
-      expect(route.vehicleRoutes[Factory::VEHICLE_NAME]).to include(Factory::WAY_POINT)
+    it "stores new waypoint into vehicle_routes" do
+      expect(route.vehicle_routes[Factory::VEHICLE_NAME]).to include(Factory::WAY_POINT)
     end
   end
 end
