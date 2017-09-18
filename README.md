@@ -14,11 +14,11 @@ Installing
 
 Usage
 -----
-Remember to require it and instantiate it with your token before using it
+Remember to require it and set your token before using it
 
 ```ruby
 require 'routific'
-routific = Routific.new(--API_KEY--)
+routific = Routific.setToken(--API_KEY--)
 ```
 
 ### Instance methods
