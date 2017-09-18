@@ -20,7 +20,8 @@ Remember to require it and set your token before using it
 
 ```ruby
 require 'routific'
-routific = Routific.set_token(--API_KEY--)
+Routific.set_token(--API_KEY--)
+routific = Routific.new
 
 routific.set_visit("order_1", {
   "start" => "9:00",
