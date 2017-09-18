@@ -45,6 +45,10 @@ describe RoutificApi::Vehicle do
       expect(vehicle.breaks[0]).to eq(RoutificApi::Break.new(Factory::BREAK_PARAMS))
     end
 
+    it "has type" do
+      expect(vehicle.type).to eq(Factory::SINGLE_TYPE)
+    end
+
     describe "#as_json" do
       subject(:vehicleJSON) { vehicle.as_json }
 
@@ -82,6 +86,26 @@ describe RoutificApi::Vehicle do
 
       it "has breaks" do
         expect(vehicleJSON["breaks"]).to eq(Factory::VEHICLE_BREAKS)
+      end
+
+      it "has type" do
+        expect(vehicleJSON["type"]).to eq(Factory::SINGLE_TYPE)
+      end
+    end
+  end
+
+  describe "valid multiple type" do
+    subject(:vehicle) { Factory::VEHICLE_MULTIPLE_TYPE }
+
+    it "has type" do
+      expect(vehicle.type).to eq(Factory::MULTIPLE_TYPE)
+    end
+
+    describe "#as_json" do
+      subject(:vehicleJSON) { vehicle.as_json }
+
+      it "has type" do
+        expect(vehicleJSON["type"]).to eq(Factory::MULTIPLE_TYPE)
       end
     end
   end
