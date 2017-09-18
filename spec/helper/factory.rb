@@ -21,6 +21,10 @@ class Factory
   }
   TIME_WINDOW = RoutificApi::Visit::TimeWindow.new(TIME_WINDOW_PARAMS)
 
+  # Factory and constant for type
+  SINGLE_TYPE = "A"
+  MULTIPLE_TYPE = ["A", "B"]
+
   # Factory and constants for visit
   VISIT_ID = Faker::Lorem.word
   VISIT_START = "08:00"
@@ -84,9 +88,13 @@ class Factory
     "strict_start"    => VEHICLE_STRICT_START,
     "min_visits"      => VEHICLE_MIN_VISITS,
     "speed"           => VEHICLE_SPEED,
-    "breaks"          => VEHICLE_BREAKS
+    "breaks"          => VEHICLE_BREAKS,
+    "type"            => SINGLE_TYPE
     }
   VEHICLE = RoutificApi::Vehicle.new(VEHICLE_ID, VEHICLE_PARAMS)
+  VEHICLE_PARAMS_MULTIPLE_TYPE = VEHICLE_PARAMS
+  VEHICLE_PARAMS_MULTIPLE_TYPE["type"] = MULTIPLE_TYPE
+  VEHICLE_MULTIPLE_TYPE = RoutificApi::Vehicle.new(VEHICLE_ID, VEHICLE_PARAMS_MULTIPLE_TYPE)
 
   # Factory and constants for way point
   WAY_POINT_LOCATION_ID = Faker::Lorem.word
