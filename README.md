@@ -1,11 +1,13 @@
 Routific Ruby Gem
 =================
 
-[![Build Status](https://secure.travis-ci.org/routific/routific-gem.png)](http://travis-ci.org/routific/routific-gem)
+[![Build Status](https://travis-ci.org/routific/routific-gem.svg?branch=master)](https://travis-ci.org/routific/routific-gem)
 
 This Ruby Gem assists users to easily access the [Routific API][1], which is a practical and scalable solution to the Vehicle Routing Problem.
 
   [1]: https://routific.com/developers
+
+Please refer to the full [documentation](https://docs.routific.com) for a detailled documentation of the API.
 
 Installing
 ----------
@@ -14,100 +16,14 @@ Installing
 
 Usage
 -----
-Remember to require it and instantiate it with your token before using it
+Remember to require it and set your token before using it
 
 ```ruby
 require 'routific'
-routific = Routific.new(--API_KEY--)
-```
+Routific.set_token(--API_KEY--)
+routific = Routific.new
 
-### Instance methods
-
-`routific.setVisit( id, [params] )`
-
-Sets a visit for the specified location using the specified parameters
-
-Required arguments in params:
-
-- location: Object representing the location of the visit.
-  + lat: Latitude of this location
-  + lng: Longitude of this location
-  + name: (optional) Name of the location
-
-Optional arguments in params:
-
- - start: the earliest time for this visit. Default value is 00:00, if not specified.
- - end: the latest time for this visit. Default value is    23:59, if not specified.
- - duration: the length of this visit in minutes
- - demand: the capacity that this visit requires
-
-`routific.setVehicle( id, params )`
-
-Sets a vehicle with the specified ID and parameters
-
-Required arguments in params:
-
-- start_location: Object representing the start location for this vehicle.
-  + lat: Latitude of this location
-  + lng: Longitude of this location
-  + name: (optional) Name of the location
-
-Optional arguments in params:
-
- - end_location: Object representing the end location for this vehicle.
-  + lat: Latitude of this location
-  + lng: Longitude of this location
-  + name: (optional) Name of the location
-
- - shift_start: this vehicle's start shift time (e.g. '08:00'). Default value is 00:00, if not specified.
- - shift_end: this vehicle's end shift time (e.g. '17:00'). Default value is 23:59, if not specified.
- - capacity: the capacity that this vehicle can load
-
-`routific.setOptions( params )`
-
-Sets optional options onto the route requests.
-
-Optional arguments must be one of the following:
-
-- traffic
-- min_visits_per_vehicle
-- balance
-- min_vehicles
-- shortest_distance
-
-`routific.getRoute()`
-
-Returns the route using the previously provided network, visits and fleet information
-
-
-### Class methods
-
-`Routific.setToken( token )`
-
-Sets the default access token to use
-
-`Routific.getRoute( id, [params] )`
-
-Returns the route using the specified access token, network, visits and fleet information
-
-
-Both getRoute functions return the Route object, which has the following attributes:
-
- - status: A sanity check, will always be success when the HTTP code is 200
- - fitness: Total travel-time, representing the fitness score of the solution (less is better)
- - unserved: List of visits that could not be scheduled.
- - vehicleRoutes: The optimized schedule
-
-Examples
---------
-Example 1:
-
-```ruby
-require 'routific'
-
-routific = Routific.new(--API_KEY--)
-
-routific.setVisit("order_1", {
+routific.set_visit("order_1", {
   "start" => "9:00",
   "end" => "12:00",
   "duration" => 10,
@@ -118,7 +34,18 @@ routific.setVisit("order_1", {
   }
 })
 
-routific.setVehicle("vehicle_1", {
+routific.set_visit("order_2", {
+  "start" => "9:00",
+  "end" => "12:00",
+  "duration" => 10,
+  "location" => {
+    "name"=> "3780 Arbutus",
+    "lat"=> 49.2474624,
+    "lng"=> -123.1532338
+  }
+})
+
+routific.set_vehicle("vehicle_1", {
   "start_location" => {
     "name" => "800 Kingsway",
     "lat" => 49.2553636,
@@ -133,50 +60,94 @@ routific.setVehicle("vehicle_1", {
   "shift_end" => "12:00",
 })
 
-route = routific.getRoute()
+route = routific.get_route()
 ```
 
-Example 2:
+### Class methods
+
+`Routific.set_token( token )` sets the authentication token to use.
+
+### Instance methods
+
+#### `routific.set_visit( id, params )`
+
+Sets a visit with the specified id and parameters:
+
+- `location` (*required*): Object representing the location of the visit.
+  + lat: Latitude of this location
+  + lng: Longitude of this location
+  + name: (optional) Name of the location
+- `start`: the earliest time for this visit. Default value is 00:00, if not specified.
+- `end`: the latest time for this visit. Default value is    23:59, if not specified.
+- `duration`: the length of this visit in minutes
+- `demand`: the capacity that this visit requires
+- `priority`: higher priority visits are more likely to be served
+- `type`: restrict the vehicle that can serve this visit
+- `time_windows`: specify different time-windows for serving the visit.
+It should be an array of hashes: `[ { "start" => "08:00", "end" => "12:00" } ]`
+
+#### `routific.set_vehicle( id, params )`
+
+Sets a vehicle with the specified ID and parameters:
+- `start_location (*required*)`: Object representing the start location for this vehicle.
+  + lat: Latitude of this location
+  + lng: Longitude of this location
+  + name: (optional) Name of the location
+- `end_location`: Object representing the end location for this vehicle.
+  + lat: Latitude of this location
+  + lng: Longitude of this location
+  + name: (optional) Name of the location
+- `shift_start`: this vehicle's start shift time (e.g. '08:00'). Default value is 00:00, if not specified.
+- `shift_end`: this vehicle's end shift time (e.g. '17:00'). Default value is 23:59, if not specified.
+- `capacity`: the capacity that this vehicle can load
+- `type`: restrict the visit this vehicle can serve
+- `speed`: vehicle speed
+- `min_visits`: minimum number of visits that should be assigned to this vehicle
+- `strict_start`: force the departure time to be `shift_start`
+- `breaks`: specify breaks for the driver. It should an array of hashes:
+It should be an array of hashes: `[ { "id" => "lunch", "start" => "12:00", "end" => "12:30" } ]`
+
+#### `routific.set_options( params )`
+
+Sets optional options onto the route requests.
+Optional arguments must be one of the following:
+
+- `traffic`
+- `min_visits_per_vehicle`
+- `balance`
+- `min_vehicles`
+- `shortest_distance`
+- `squash_duration`
+- `max_vehicle_overtime`
+- `max_visit_lateness`
+
+#### `routific.get_route()`
+
+Returns an optimized route using the previously provided visits, fleet and options..
+The request may timeout if the problem is too large.
+
+It returns a route object with the following attributes:
+- `status`: A sanity check
+- `unserved`: List of visits that could not be scheduled.
+- `vehicle_routes`: The optimized schedule
+- other attributes that your can find in the [full documentation](https://docs.routfic.com)
+
+#### `routific.get_route_async()`
+
+For requests with 60 visits and more, it is recommended to make asynchronous call to the API.
 
 ```ruby
-require 'routific'
-
-Routific.setToken(--API_KEY--)
-
-visits = {
-  "order_1" => {
-    "start" => "9:00",
-    "end" => "12:00",
-    "duration" => 10,
-    "location" => {
-      "name" => "6800 Cambie",
-      "lat" => 49.227107,
-      "lng" => -123.1163085
-    }
-  }
-}
-
-fleet = {
-  "vehicle_1" => {
-    "start_location" => {
-      "name" => "800 Kingsway",
-      "lat" => 49.2553636,
-      "lng" => -123.0873365
-    },
-    "end_location" => {
-      "name" => "800 Kingsway",
-      "lat" => 49.2553636,
-      "lng" => -123.0873365
-    },
-    "shift_start" => "8:00",
-    "shift_end" => "12:00"
-  }
-}
-
-data = {
-  visits: visits,
-  fleet: fleet
-}
-
-route = Routific.getRoute(data)
+job = routific.get_route_async()
+puts job.status # => "pending"
+sleep 5
+job.fetch
+puts job.status # => "finished"
+route = job.route
 ```
+
+It returns a job object with the following attibutes:
+- `status`: status of the task ('pending', 'processing', 'finished', 'error')
+- `id`: a unique identifier for the task
+- `created_at`, `finished_at`: creation and finish times
+- `input`: the data used for the request
+- `route`: a route object
