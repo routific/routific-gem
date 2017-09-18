@@ -28,6 +28,10 @@ describe RoutificApi::Location do
       expect(visit.priority).to eq(Factory::VISIT_PRIORITY)
     end
 
+    it "has type" do
+      expect(visit.type).to eq(Factory::SINGLE_TYPE)
+    end
+
     it "has time_windows" do
       expect(visit.time_windows.kind_of?(Array)).to be(true)
       expect(visit.time_windows[0]).to eq(Factory::TIME_WINDOW)
@@ -60,8 +64,28 @@ describe RoutificApi::Location do
         expect(visitJSON["priority"]).to eq(Factory::VISIT_PRIORITY)
       end
 
+      it "has type" do
+        expect(visitJSON["type"]).to eq(Factory::SINGLE_TYPE)
+      end
+
       it "has time_windows" do
         expect(visitJSON["time_windows"]).to eq(Factory::VISIT_TIME_WINDOWS)
+      end
+    end
+  end
+
+  describe "valid multiple type" do
+    subject(:visit) { Factory::VISIT_MULTIPLE_TYPE }
+
+    it "has type" do
+      expect(visit.type).to eq(Factory::MULTIPLE_TYPE)
+    end
+
+    describe "#as_json" do
+      subject(:visitJSON) { visit.as_json }
+
+      it "has type" do
+        expect(visitJSON["type"]).to eq(Factory::MULTIPLE_TYPE)
       end
     end
   end

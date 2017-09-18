@@ -4,7 +4,7 @@ module RoutificApi
   # This class represents a vehicle in the fleet
   class Vehicle
     attr_accessor :id, :start_location, :end_location, :shift_start,
-      :shift_end, :capacity, :strict_start, :min_visits, :speed, :breaks
+      :shift_end, :capacity, :strict_start, :min_visits, :speed, :breaks, :type
 
     # Constructor
     #
@@ -30,6 +30,7 @@ module RoutificApi
       @strict_start = params["strict_start"]
       @min_visits = params["min_visits"]
       @speed = params["speed"]
+      @type = params["type"]
       if params["breaks"]
         @breaks = params["breaks"].map{ |brk| RoutificApi::Break.new(brk) }
       end
@@ -51,6 +52,7 @@ module RoutificApi
       json_data["strict_start"] = self.strict_start if not self.strict_start.nil?
       json_data["min_visits"] = self.min_visits if self.min_visits
       json_data["speed"] = self.speed if self.speed
+      json_data["type"] = self.type if self.type
       if self.breaks
         json_data["breaks"] = self.breaks.map{ |brk| brk.as_json }
       end

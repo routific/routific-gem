@@ -2,7 +2,7 @@ module RoutificApi
   # This class represents a location to be visited
   class Visit
     attr_reader :id, :start, :end, :duration, :demand, :location, :priority,
-      :time_windows
+      :time_windows, :type
 
     # Constructor
     #
@@ -21,6 +21,7 @@ module RoutificApi
       @demand = params["demand"]
       @location = RoutificApi::Location.new(params["location"])
       @priority = params["priority"]
+      @type = params["type"]
       if params["time_windows"]
         @time_windows = params["time_windows"].map{ |tw| TimeWindow.new(tw) }
       end
@@ -40,6 +41,7 @@ module RoutificApi
       json_data["demand"] = self.demand if self.demand
       json_data["location"] = self.location.as_json
       json_data["priority"] = self.priority if self.priority
+      json_data["type"] = self.type if self.type
       if self.time_windows
         json_data["time_windows"] = self.time_windows.map{ |tw| tw.as_json }
       end
