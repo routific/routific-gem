@@ -44,9 +44,13 @@ class Factory
     "demand"       => VISIT_DEMAND,
     "location"     => VISIT_LOCATION,
     "priority"     => VISIT_PRIORITY,
+    "type"         => SINGLE_TYPE,
     "time_windows" => VISIT_TIME_WINDOWS
   }
   VISIT = RoutificApi::Visit.new(VISIT_ID, VISIT_PARAMS)
+  VISIT_PARAMS_MULTIPLE_TYPE = VISIT_PARAMS
+  VISIT_PARAMS_MULTIPLE_TYPE["type"] = MULTIPLE_TYPE
+  VISIT_MULTIPLE_TYPE = RoutificApi::Visit.new(VISIT_ID, VISIT_PARAMS_MULTIPLE_TYPE)
 
   # Factoru and constants for break
   BREAK_ID = Faker::Lorem.word
