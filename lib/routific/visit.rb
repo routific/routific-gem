@@ -33,18 +33,18 @@ module RoutificApi
     # Returns the JSON representation of this object
     # def to_json(options = nil)
     def as_json(options = nil)
-      jsonData = {}
-      jsonData["start"] = self.start if self.start
-      jsonData["end"] = self.end if self.end
-      jsonData["duration"] = self.duration if self.duration
-      jsonData["demand"] = self.demand if self.demand
-      jsonData["location"] = self.location.as_json
-      jsonData["priority"] = self.priority if self.priority
+      json_data = {}
+      json_data["start"] = self.start if self.start
+      json_data["end"] = self.end if self.end
+      json_data["duration"] = self.duration if self.duration
+      json_data["demand"] = self.demand if self.demand
+      json_data["location"] = self.location.as_json
+      json_data["priority"] = self.priority if self.priority
       if self.time_windows
-        jsonData["time_windows"] = self.time_windows.map{ |tw| tw.as_json }
+        json_data["time_windows"] = self.time_windows.map{ |tw| tw.as_json }
       end
 
-      jsonData
+      json_data
     end
 
     private
@@ -77,11 +77,11 @@ module RoutificApi
       end
 
       def as_json
-        jsonData = {}
-        jsonData["start"] = self.start if self.start
-        jsonData["end"] = self.end if self.end
+        json_data = {}
+        json_data["start"] = self.start if self.start
+        json_data["end"] = self.end if self.end
 
-        jsonData
+        json_data
       end
     end
   end
