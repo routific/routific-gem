@@ -11,6 +11,7 @@ require_relative './util'
 # Main class of this gem
 class Routific
   attr_reader :token, :visits, :fleet, :options
+  @@token = nil
 
   # Constructor
   # token: Access token for Routific API

@@ -2,9 +2,22 @@ require_relative './helper/spec_helper'
 require_relative '../lib/util'
 
 describe Routific do
+  describe "without token" do
+    before do
+      Routific.class_variable_set :@@token, nil
+    end
+
+    it "cannot be instantiated without token" do
+      expect{Routific.new()}.to raise_error(ArgumentError)
+    end
+  end
+
   describe "instance objects" do
-    Routific.setToken(ENV["API_KEY"])
-    subject(:routific) { Routific.new() }
+    routific = nil
+    before do
+      Routific.setToken(ENV["API_KEY"])
+      routific = Routific.new()
+    end
 
     it "has token" do
       expect(routific.token).to eq(Util.prefix_token(ENV["API_KEY"]))
@@ -153,12 +166,22 @@ describe Routific do
 
   describe "class methods" do
     describe ".setToken" do
-      before do
-        Routific.setToken(ENV["API_KEY"])
+      before(:each) do
+        Routific.class_variable_set :@@token, nil
       end
 
-      it "sets default Routific API token" do
-        expect(Routific.token).to eq(Util.prefix_token(ENV["API_KEY"]))
+      it "sets Routific API token" do
+        Routific.setToken("bearer token")
+        expect(Routific.token).to eq("bearer token")
+      end
+
+      it "sets Routific API token, prefixing \"bearer\" if absent" do
+        Routific.setToken("token")
+        expect(Routific.token).to eq("bearer token")
+      end
+
+      it "throws an ArgumentError if token is not passed in" do
+        expect{Routific.setToken(nil)}.to raise_error(ArgumentError)
       end
     end
   end
