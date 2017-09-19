@@ -130,7 +130,7 @@ It returns a route object with the following attributes:
 - `status`: A sanity check
 - `unserved`: List of visits that could not be scheduled.
 - `vehicle_routes`: The optimized schedule
-- other attributes that your can find in the [full documentation](https://docs.routfic.com)
+- other attributes that your can find in the [full documentation](https://docs.routific.com)
 
 #### `routific.get_route_async()`
 
