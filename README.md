@@ -105,7 +105,7 @@ Sets a vehicle with the specified ID and parameters:
 - `min_visits`: minimum number of visits that should be assigned to this vehicle
 - `strict_start`: force the departure time to be `shift_start`
 - `breaks`: specify breaks for the driver.
-It should an array of hashes: `[ { "id" => "lunch", "start" => "12:00", "end" => "12:30" } ]`
+It should be an array of hashes: `[ { "id" => "lunch", "start" => "12:00", "end" => "12:30" } ]`
 
 #### `routific.set_options( params )`
 
