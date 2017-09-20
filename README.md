@@ -104,7 +104,7 @@ Sets a vehicle with the specified ID and parameters:
 - `speed`: vehicle speed
 - `min_visits`: minimum number of visits that should be assigned to this vehicle
 - `strict_start`: force the departure time to be `shift_start`
-- `breaks`: specify breaks for the driver. It should an array of hashes:
+- `breaks`: specify breaks for the driver.
 It should be an array of hashes: `[ { "id" => "lunch", "start" => "12:00", "end" => "12:30" } ]`
 
 #### `routific.set_options( params )`
@@ -130,7 +130,7 @@ It returns a route object with the following attributes:
 - `status`: A sanity check
 - `unserved`: List of visits that could not be scheduled.
 - `vehicle_routes`: The optimized schedule
-- other attributes that your can find in the [full documentation](https://docs.routfic.com)
+- other attributes that you can find in the [full documentation](https://docs.routific.com)
 
 #### `routific.get_route_async()`
 
