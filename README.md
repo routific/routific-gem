@@ -20,7 +20,7 @@ Remember to require it and set your token before using it
 
 ```ruby
 require 'routific'
-Routific.set_token(--API_KEY--)
+Routific.set_token("YOUR_API_KEY_HERE")
 routific = Routific.new
 
 routific.set_visit("order_1", {
@@ -61,6 +61,24 @@ routific.set_vehicle("vehicle_1", {
 })
 
 route = routific.get_route()
+
+
+puts route.status # => "success"
+puts route.total_travel_time # => 29
+
+vehicle_routes = route.vehicle_routes
+
+v1_route = vehicle_routes["vehicle_1"]
+puts v1_route.length # => 4 (start -> order_1 -> order_2 -> end)
+
+v1_route.each do |w|
+  puts "#{w.location_id}: #{w.arrival_time} ~ #{w.finish_time}"
+end
+# vehicle_1_start: 08:49 ~
+# order_1: 09:00 ~ 09:10
+# order_2: 09:18 ~ 09:28
+# vehicle_1_end: 09:38 ~
+
 ```
 
 ### Class methods
@@ -89,7 +107,7 @@ It should be an array of hashes: `[ { "start" => "08:00", "end" => "12:00" } ]`
 #### `routific.set_vehicle( id, params )`
 
 Sets a vehicle with the specified ID and parameters:
-- `start_location (*required*)`: Object representing the start location for this vehicle.
+- `start_location` (*required*): Object representing the start location for this vehicle.
   + lat: Latitude of this location
   + lng: Longitude of this location
   + name: (optional) Name of the location
@@ -123,13 +141,21 @@ Optional arguments must be one of the following:
 
 #### `routific.get_route()`
 
-Returns an optimized route using the previously provided visits, fleet and options..
+Returns an optimized route using the previously provided visits, fleet and options.
 The request may timeout if the problem is too large.
 
 It returns a route object with the following attributes:
 - `status`: A sanity check
 - `unserved`: List of visits that could not be scheduled.
 - `vehicle_routes`: The optimized schedule
+- other attributes that you can find in the [full documentation](https://docs.routific.com)
+
+The `vehicle_routes` attribute is a hash mapping vehicle ID to the corresponding route, represented as an array of waypoints: `{ "vehicle_1" => [ way_point_1, way_point_2, way_point_3, way_point_4 ] }`
+
+The waypoint object has the following attributes:
+- `location_id`
+- `arrival_time`
+- `finish_time`
 - other attributes that you can find in the [full documentation](https://docs.routific.com)
 
 #### `routific.get_route_async()`
