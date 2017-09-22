@@ -1,14 +1,20 @@
 module RoutificApi
   # This class represents a location to visit in the route
   class WayPoint
-    attr_reader :location_id, :arrival_time, :finish_time, :location_name
+    FIELDS = [
+      :location_id, :location_name,
+      :arrival_time, :finish_time,
+      :id, :break, :start, :end, :in_transit, # breaks
+      :late_by # visit lateness
+    ]
+
+    attr_reader *FIELDS
 
     # Constructor
     def initialize(options = {})
-      @location_id = options['location_id']
-      @arrival_time = options['arrival_time']
-      @finish_time = options['finish_time']
-      @location_name = options['location_name']
+      FIELDS.each do |field|
+        instance_variable_set "@#{field}", options[field.to_s]
+      end
     end
   end
 end

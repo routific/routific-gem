@@ -105,12 +105,26 @@ class Factory
   WAY_POINT_ARRIVAL_TIME = "09:00"
   WAY_POINT_FINISH_TIME = "09:10"
   WAY_POINT_LOCATION_NAME = Faker::Lorem.word
-  WAY_POINT = RoutificApi::WayPoint.new({
+  WAY_POINT_PARAMS = {
     'location_id'   => WAY_POINT_LOCATION_ID,
     'arrival_time'  => WAY_POINT_ARRIVAL_TIME,
     'finish_time'   => WAY_POINT_FINISH_TIME,
     'location_name' => WAY_POINT_LOCATION_NAME
-  })
+  }
+  WAY_POINT = RoutificApi::WayPoint.new(WAY_POINT_PARAMS)
+  WAY_POINT_LATE_PARAMS = WAY_POINT_PARAMS.clone
+  WAY_POINT_LATE_PARAMS['late_by'] = 10
+  WAY_POINT_LATE = RoutificApi::WayPoint.new(WAY_POINT_LATE_PARAMS)
+  WAY_POINT_BREAK_PARAMS = {
+    'id' => Faker::Lorem.word,
+    'break' => true,
+    'arrival_time' => WAY_POINT_ARRIVAL_TIME,
+    'finish_time' => WAY_POINT_FINISH_TIME,
+    'start' => "09:00",
+    'end' => "09:10",
+    'in_transit' => true
+  }
+  WAY_POINT_BREAK = RoutificApi::WayPoint.new(WAY_POINT_BREAK_PARAMS)
 
   # Factory and constants for route
   ROUTE_INPUT = {
