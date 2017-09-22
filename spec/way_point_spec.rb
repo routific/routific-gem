@@ -20,4 +20,22 @@ describe RoutificApi::Vehicle do
       expect(way_point.location_name).to eq(Factory::WAY_POINT_LOCATION_NAME)
     end
   end
+
+  describe "break" do
+    subject(:way_point_break) { Factory::WAY_POINT_BREAK }
+
+    Factory::WAY_POINT_BREAK_PARAMS.each do |key, value|
+      it "has #{key}" do
+        expect(eval("way_point_break.#{key}")).to eq(value)
+      end
+    end
+  end
+
+  describe "lateness" do
+    subject(:way_point_late) { Factory::WAY_POINT_LATE }
+
+    it "has late_by" do
+      expect(way_point_late.late_by).to eq(Factory::WAY_POINT_LATE_PARAMS['late_by'])
+    end
+  end
 end

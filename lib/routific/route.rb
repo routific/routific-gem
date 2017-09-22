@@ -1,23 +1,29 @@
 module RoutificApi
   # This class represents the resulting route returned by the Routific API
   class Route
-    attr_reader :status, :unserved, :vehicleRoutes, :total_travel_time, :total_idle_time
+    FIELDS = [
+      :status,
+      :unserved, :num_unserved,
+      :distances, :total_distance,
+      :total_working_time, :total_travel_time,
+      :total_break_time, :total_idle_time,
+      :total_visit_lateness, :num_late_visits,
+      :vehicle_overtime, :total_overtime
+    ]
+
+    attr_reader *FIELDS
+    attr_reader :vehicle_routes
 
     # Constructor
-    def initialize(status:, solution: {}, unserved: {}, total_travel_time: 0,
-    total_idle_time: 0, total_break_time: 0, total_working_time: 0)
-      @status = status
-      @unserved = unserved
-      @total_idle_time = total_idle_time
-      @total_travel_time = total_travel_time
-      @total_break_time = total_break_time
-      @total_working_time = total_working_time
-
-      add_solution(solution)
+    def initialize(data)
+      FIELDS.each do |field|
+        instance_variable_set "@#{field}", data[field]
+      end
+      add_solution(data[:solution] || {})
     end
 
     def add_solution(solution)
-      @vehicleRoutes = {}
+      @vehicle_routes = {}
 
       solution.each do |vehicle_name, way_points|
         # Get all way points for this vehicle
@@ -31,16 +37,12 @@ module RoutificApi
 
     # Adds a new way point for the specified vehicle
     def add_way_point(vehicle_name, way_point)
-      if @vehicleRoutes[vehicle_name].nil?
+      if @vehicle_routes[vehicle_name].nil?
         # No previous way point was added for the specified vehicle, so create a new array
-        @vehicleRoutes[vehicle_name] = []
+        @vehicle_routes[vehicle_name] = []
       end
       # Adds the provided way point for the specified vehicle
-      @vehicleRoutes[vehicle_name] << way_point
-    end
-
-    def number_of_unserved
-      @number_of_unserved ||= unserved.count
+      @vehicle_routes[vehicle_name] << way_point
     end
 
     class << self
@@ -54,10 +56,6 @@ module RoutificApi
         hash.keys.each do |key|
           hash[(key.to_sym rescue key) || key] = hash.delete(key)
         end
-
-        hash.delete(:num_unserved)
-        hash.delete(:unserved) if hash[:unserved] == nil
-
         hash
       end
     end

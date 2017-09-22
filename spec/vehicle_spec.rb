@@ -28,6 +28,27 @@ describe RoutificApi::Vehicle do
       expect(vehicle.capacity).to eq(Factory::VEHICLE_CAPACITY)
     end
 
+    it "has strict_start" do
+      expect(vehicle.strict_start).to eq(Factory::VEHICLE_STRICT_START)
+    end
+
+    it "has min_visits" do
+      expect(vehicle.min_visits).to eq(Factory::VEHICLE_MIN_VISITS)
+    end
+
+    it "has speed" do
+      expect(vehicle.speed).to eq(Factory::VEHICLE_SPEED)
+    end
+
+    it "has breaks" do
+      expect(vehicle.breaks.kind_of?(Array)).to be(true)
+      expect(vehicle.breaks[0]).to eq(RoutificApi::Break.new(Factory::BREAK_PARAMS))
+    end
+
+    it "has type" do
+      expect(vehicle.type).to eq(Factory::SINGLE_TYPE)
+    end
+
     describe "#as_json" do
       subject(:vehicleJSON) { vehicle.as_json }
 
@@ -49,6 +70,42 @@ describe RoutificApi::Vehicle do
 
       it "has capacity" do
         expect(vehicleJSON["capacity"]).to eq(Factory::VEHICLE_CAPACITY)
+      end
+
+      it "has strict_start" do
+        expect(vehicleJSON["strict_start"]).to eq(Factory::VEHICLE_STRICT_START)
+      end
+
+      it "has min_visits" do
+        expect(vehicleJSON["min_visits"]).to eq(Factory::VEHICLE_MIN_VISITS)
+      end
+
+      it "has speed" do
+        expect(vehicleJSON["speed"]).to eq(Factory::VEHICLE_SPEED)
+      end
+
+      it "has breaks" do
+        expect(vehicleJSON["breaks"]).to eq(Factory::VEHICLE_BREAKS)
+      end
+
+      it "has type" do
+        expect(vehicleJSON["type"]).to eq(Factory::SINGLE_TYPE)
+      end
+    end
+  end
+
+  describe "valid multiple type" do
+    subject(:vehicle) { Factory::VEHICLE_MULTIPLE_TYPE }
+
+    it "has type" do
+      expect(vehicle.type).to eq(Factory::MULTIPLE_TYPE)
+    end
+
+    describe "#as_json" do
+      subject(:vehicleJSON) { vehicle.as_json }
+
+      it "has type" do
+        expect(vehicleJSON["type"]).to eq(Factory::MULTIPLE_TYPE)
       end
     end
   end
@@ -96,6 +153,22 @@ describe RoutificApi::Vehicle do
 
       it "does not have capacity" do
         expect( vehicleJSON["capacity"] ).to be_nil
+      end
+
+      it "does not have strict_start" do
+        expect( vehicleJSON["strict_start"] ).to be_nil
+      end
+
+      it "does not have min_visits" do
+        expect( vehicleJSON["min_visits"] ).to be_nil
+      end
+
+      it "does not have speed" do
+        expect( vehicleJSON["speed"] ).to be_nil
+      end
+
+      it "does not have breaks" do
+        expect( vehicleJSON["breaks"] ).to be_nil
       end
     end
   end

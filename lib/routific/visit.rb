@@ -1,7 +1,8 @@
 module RoutificApi
   # This class represents a location to be visited
   class Visit
-    attr_reader :id, :start, :end, :duration, :demand, :location
+    attr_reader :id, :start, :end, :duration, :demand, :location, :priority,
+      :time_windows, :type
 
     # Constructor
     #
@@ -19,6 +20,11 @@ module RoutificApi
       @duration = params["duration"]
       @demand = params["demand"]
       @location = RoutificApi::Location.new(params["location"])
+      @priority = params["priority"]
+      @type = params["type"]
+      if params["time_windows"]
+        @time_windows = params["time_windows"].map{ |tw| TimeWindow.new(tw) }
+      end
     end
 
     def to_json(options)
@@ -28,14 +34,19 @@ module RoutificApi
     # Returns the JSON representation of this object
     # def to_json(options = nil)
     def as_json(options = nil)
-      jsonData = {}
-      jsonData["start"] = self.start if self.start
-      jsonData["end"] = self.end if self.end
-      jsonData["duration"] = self.duration if self.duration
-      jsonData["demand"] = self.demand if self.demand
-      jsonData["location"] = self.location.as_json
+      json_data = {}
+      json_data["start"] = self.start if self.start
+      json_data["end"] = self.end if self.end
+      json_data["duration"] = self.duration if self.duration
+      json_data["demand"] = self.demand if self.demand
+      json_data["location"] = self.location.as_json
+      json_data["priority"] = self.priority if self.priority
+      json_data["type"] = self.type if self.type
+      if self.time_windows
+        json_data["time_windows"] = self.time_windows.map{ |tw| tw.as_json }
+      end
 
-      jsonData
+      json_data
     end
 
     private
@@ -45,6 +56,34 @@ module RoutificApi
     def validate(params)
       if params["location"].nil?
         raise ArgumentError, "'location' parameter must be provided"
+      end
+    end
+
+    public
+    class TimeWindow
+      attr_reader :start, :end
+
+      # Constructor
+      #
+      # Optional arguments
+      # start: start of the time-window
+      # end: end of the time-window
+      def initialize(params)
+        @start = params["start"]
+        @end = params["end"]
+      end
+
+      def ==(another_tw)
+        self.start == another_tw.start &&
+          self.end == another_tw.end
+      end
+
+      def as_json
+        json_data = {}
+        json_data["start"] = self.start if self.start
+        json_data["end"] = self.end if self.end
+
+        json_data
       end
     end
   end
