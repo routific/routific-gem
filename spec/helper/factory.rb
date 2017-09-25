@@ -113,6 +113,7 @@ class Factory
   }
   WAY_POINT = RoutificApi::WayPoint.new(WAY_POINT_PARAMS)
   WAY_POINT_LATE_PARAMS = WAY_POINT_PARAMS.clone
+  WAY_POINT_LATE_PARAMS['too_late'] = true
   WAY_POINT_LATE_PARAMS['late_by'] = 10
   WAY_POINT_LATE = RoutificApi::WayPoint.new(WAY_POINT_LATE_PARAMS)
   WAY_POINT_BREAK_PARAMS = {

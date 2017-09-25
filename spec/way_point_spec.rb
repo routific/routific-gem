@@ -34,6 +34,10 @@ describe RoutificApi::Vehicle do
   describe "lateness" do
     subject(:way_point_late) { Factory::WAY_POINT_LATE }
 
+    it "has too_late" do
+      expect(way_point_late.too_late).to eq(Factory::WAY_POINT_LATE_PARAMS['too_late'])
+    end
+
     it "has late_by" do
       expect(way_point_late.late_by).to eq(Factory::WAY_POINT_LATE_PARAMS['late_by'])
     end
