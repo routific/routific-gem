@@ -8,7 +8,7 @@ module RoutificApi
       :total_working_time, :total_travel_time,
       :total_break_time, :total_idle_time,
       :total_visit_lateness, :num_late_visits,
-      :vehicle_overtime, :total_overtime
+      :vehicle_overtime, :total_vehicle_overtime
     ]
 
     attr_reader *FIELDS
