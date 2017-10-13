@@ -4,6 +4,7 @@ module RoutificApi
     FIELDS = [
       :location_id, :location_name,
       :arrival_time, :finish_time,
+      :idle_time,
       :id, :break, :start, :end, :in_transit, # breaks
       :too_late, :late_by # visit lateness
     ]

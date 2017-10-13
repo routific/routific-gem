@@ -105,11 +105,13 @@ class Factory
   WAY_POINT_ARRIVAL_TIME = "09:00"
   WAY_POINT_FINISH_TIME = "09:10"
   WAY_POINT_LOCATION_NAME = Faker::Lorem.word
+  WAY_POINT_IDLE_TIME = 5
   WAY_POINT_PARAMS = {
     'location_id'   => WAY_POINT_LOCATION_ID,
     'arrival_time'  => WAY_POINT_ARRIVAL_TIME,
     'finish_time'   => WAY_POINT_FINISH_TIME,
-    'location_name' => WAY_POINT_LOCATION_NAME
+    'location_name' => WAY_POINT_LOCATION_NAME,
+    'idle_time'     => WAY_POINT_IDLE_TIME
   }
   WAY_POINT = RoutificApi::WayPoint.new(WAY_POINT_PARAMS)
   WAY_POINT_LATE_PARAMS = WAY_POINT_PARAMS.clone

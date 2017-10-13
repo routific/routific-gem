@@ -19,6 +19,10 @@ describe RoutificApi::Vehicle do
     it "has a location name" do
       expect(way_point.location_name).to eq(Factory::WAY_POINT_LOCATION_NAME)
     end
+
+    it "has idle_time" do
+      expect(way_point.idle_time).to eq(Factory::WAY_POINT_IDLE_TIME)
+    end
   end
 
   describe "break" do
