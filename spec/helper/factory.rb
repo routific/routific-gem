@@ -143,7 +143,7 @@ class Factory
     total_visit_lateness: 60,
     num_late_visits: 2,
     vehicle_overtime: 70,
-    total_overtime: 80
+    total_vehicle_overtime: 80
   }
   ROUTE = RoutificApi::Route.new(ROUTE_INPUT)
   SOLUTION = {
