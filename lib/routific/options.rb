@@ -1,7 +1,7 @@
 module RoutificApi
   # This class represents a set of options for the request
   class Options
-    VALID_PARAMS = %w{ traffic min_visits_per_vehicle balance min_vehicles shortest_distance squash_durations max_vehicle_overtime max_visit_lateness }
+    VALID_PARAMS = %w{ traffic min_visits_per_vehicle balance min_vehicles shortest_distance squash_durations max_vehicle_overtime max_visit_lateness polylines }
 
     attr_reader *VALID_PARAMS
 
