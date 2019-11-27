@@ -65,6 +65,7 @@ route = routific.get_route()
 
 puts route.status # => "success"
 puts route.total_travel_time # => 29
+puts route.polylines["vehicle_1"] # => s`i}|AbxswiFnn@gdBvG?vVf@jC?nZRb[f@j\z@nZRnZRj\f@nZz
 
 vehicle_routes = route.vehicle_routes
 
