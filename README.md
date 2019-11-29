@@ -60,6 +60,10 @@ routific.set_vehicle("vehicle_1", {
   "shift_end" => "12:00",
 })
 
+routific.set_options({
+  "polylines" => true
+})
+
 route = routific.get_route()
 
 
