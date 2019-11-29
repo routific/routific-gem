@@ -3,7 +3,7 @@ Routific Ruby Gem
 
 [![Build Status](https://travis-ci.org/routific/routific-gem.svg?branch=master)](https://travis-ci.org/routific/routific-gem)
 
-This Ruby Gem assists users to easily access the [Routific API][1], which is a practical and scalable solution to the Vehicle Routing Problem.
+This Ruby Gem assists users to easily access the [Routific API][1], which is a practical and scalable solution to the Vehicle Routing Problem and Traveling Salesman Problem.
 
   [1]: https://routific.com/developers
 
@@ -60,11 +60,16 @@ routific.set_vehicle("vehicle_1", {
   "shift_end" => "12:00",
 })
 
+routific.set_options({
+  "polylines" => true
+})
+
 route = routific.get_route()
 
 
 puts route.status # => "success"
 puts route.total_travel_time # => 29
+puts route.polylines["vehicle_1"] # => s`i}|AbxswiFnn@gdBvG?vVf@jC?nZRb[f@j\z@nZRnZRj\f@nZz
 
 vehicle_routes = route.vehicle_routes
 
